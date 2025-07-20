@@ -51,6 +51,15 @@ MonoBehaviour:
   - {fileID: 6892442591639820034, guid: 8b5c0a6f86546ff4cb7e31a2949b5b5e, type: 3}
   - {fileID: 4796380817983069013, guid: d2d86938f2a372644b1006acdfec7855, type: 3}
   - {fileID: 7368513848330719390, guid: 9951b2325f86c26468159e654ac3d800, type: 3}
+  - {fileID: 6802419926252314026, guid: 5809aeea102a77548b64de5cea948d83, type: 3}
+  - {fileID: 3736702992560007665, guid: eb76443f26da3a143b26940683b2c461, type: 3}
+  - {fileID: 9162137601533864479, guid: a5b2a11c9b66c7743a1fe4aaff4b7c29, type: 3}
+  - {fileID: 6191156971458269945, guid: 22975cc6effb1b64dafd30e31e7430b0, type: 3}
+  - {fileID: 7646093543175263883, guid: 8cf62bb4840d86943a1aa27c36babf03, type: 3}
+  - {fileID: 1489546445226974387, guid: 231f5abf6bfd7784f92bd20fe3fda8a8, type: 3}
+  - {fileID: 5114319160197162011, guid: 07370c1683b075f4c916da63ed31cf20, type: 3}
+  - {fileID: 8028356614610992858, guid: c227eec06ced92b4b85416961f7d0976, type: 3}
+  - {fileID: 8492243334751137164, guid: e45d2264c4d657b4db6ad079caa73084, type: 3}
   cloudCount: 15
   spawnXRangeOffset: {x: -10, y: 10}
   verticalSpawnRatio: 0.75

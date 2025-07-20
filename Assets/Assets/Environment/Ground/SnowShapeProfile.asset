@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7181f404f1447c0a7a17b3070b952b, type: 3}
+  m_Name: SnowShapeProfile
+  m_EditorClassIdentifier: 
+  m_Angles:
+  - m_Start: -180
+    m_End: 180
+    m_Order: 0
+    m_Sprites:
+    - {fileID: -1643477301947782222, guid: 75d183f48753dc24bb5c6411976d1224, type: 3}
+  m_FillTexture: {fileID: 2800000, guid: 4abc066a599511a43a6bde240821adf1, type: 3}
+  m_CornerSprites:
+  - m_CornerType: 0
+    m_Sprites:
+    - {fileID: 8599238869974919198, guid: 0030efa96f778f246b7b4e95b8613087, type: 3}
+  - m_CornerType: 1
+    m_Sprites:
+    - {fileID: 6079654497081031316, guid: 314e4ea346243cf40823b8975873fe4e, type: 3}
+  - m_CornerType: 2
+    m_Sprites:
+    - {fileID: -8289085470510098062, guid: 407730f12f0fce1428ae92f5882c3a34, type: 3}
+  - m_CornerType: 3
+    m_Sprites:
+    - {fileID: -2900566863887562914, guid: 26fcd88a196f1c94a8247207d1cd20ec, type: 3}
+  - m_CornerType: 4
+    m_Sprites:
+    - {fileID: -4349450234521460316, guid: 9b2e71da933298c439d80187d5c323ad, type: 3}
+  - m_CornerType: 5
+    m_Sprites:
+    - {fileID: -1374896454427263244, guid: 1ec5d59ee33b09e4fb002b84c6d31b81, type: 3}
+  - m_CornerType: 6
+    m_Sprites:
+    - {fileID: 3524718481843428365, guid: d868fd0547bcd4140a488f53173fef4a, type: 3}
+  - m_CornerType: 7
+    m_Sprites:
+    - {fileID: 3524718481843428365, guid: d868fd0547bcd4140a488f53173fef4a, type: 3}
+  m_FillOffset: 0.439
+  m_UseSpriteBorders: 1
