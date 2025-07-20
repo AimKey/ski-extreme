@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7593348752755365214
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7252294453539046141}
+  - component: {fileID: 8919050763033163306}
+  m_Layer: 0
+  m_Name: ClouldGroup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7252294453539046141
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7593348752755365214}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.4556212, y: 0.24125513, z: -0.0053590867}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8919050763033163306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7593348752755365214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32fb8f660af46ee49a19076e72f50343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cloudPrefabs:
+  - {fileID: 1801749178749917022, guid: 33a74a900b64ca041b6b0e31f3623143, type: 3}
+  - {fileID: 3184380991667338164, guid: 795a330bb07b9ad4395c9e781f1f171a, type: 3}
+  - {fileID: 1201675536311555446, guid: a3be4b06a7666964283f693e7bf1a321, type: 3}
+  - {fileID: 6892442591639820034, guid: 8b5c0a6f86546ff4cb7e31a2949b5b5e, type: 3}
+  - {fileID: 4796380817983069013, guid: d2d86938f2a372644b1006acdfec7855, type: 3}
+  - {fileID: 7368513848330719390, guid: 9951b2325f86c26468159e654ac3d800, type: 3}
+  - {fileID: 6802419926252314026, guid: 5809aeea102a77548b64de5cea948d83, type: 3}
+  - {fileID: 3736702992560007665, guid: eb76443f26da3a143b26940683b2c461, type: 3}
+  - {fileID: 9162137601533864479, guid: a5b2a11c9b66c7743a1fe4aaff4b7c29, type: 3}
+  - {fileID: 6191156971458269945, guid: 22975cc6effb1b64dafd30e31e7430b0, type: 3}
+  - {fileID: 7646093543175263883, guid: 8cf62bb4840d86943a1aa27c36babf03, type: 3}
+  - {fileID: 1489546445226974387, guid: 231f5abf6bfd7784f92bd20fe3fda8a8, type: 3}
+  - {fileID: 5114319160197162011, guid: 07370c1683b075f4c916da63ed31cf20, type: 3}
+  - {fileID: 8028356614610992858, guid: c227eec06ced92b4b85416961f7d0976, type: 3}
+  - {fileID: 8492243334751137164, guid: e45d2264c4d657b4db6ad079caa73084, type: 3}
+  cloudCount: 15
+  spawnXRangeOffset: {x: -10, y: 10}
+  verticalSpawnRatio: 0.75
+  speedRange: {x: 0.1, y: 1}
