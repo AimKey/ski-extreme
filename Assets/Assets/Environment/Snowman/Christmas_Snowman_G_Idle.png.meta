@@ -82,7 +82,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -120,7 +120,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -148,12 +148,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_0
       rect:
         serializedVersion: 2
-        x: 48
-        y: 431
-        width: 32
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 49
+        y: 432
+        width: 30
+        height: 27
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -170,12 +170,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_1
       rect:
         serializedVersion: 2
-        x: 176
-        y: 431
-        width: 32
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 177
+        y: 432
+        width: 30
+        height: 27
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -192,12 +192,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_2
       rect:
         serializedVersion: 2
-        x: 304
-        y: 431
-        width: 32
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 305
+        y: 432
+        width: 30
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -214,12 +214,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_3
       rect:
         serializedVersion: 2
-        x: 432
-        y: 431
-        width: 32
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 433
+        y: 432
+        width: 30
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -236,12 +236,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_4
       rect:
         serializedVersion: 2
-        x: 49
-        y: 303
-        width: 28
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 50
+        y: 304
+        width: 26
+        height: 27
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -258,12 +258,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_5
       rect:
         serializedVersion: 2
-        x: 177
-        y: 303
-        width: 28
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 178
+        y: 304
+        width: 26
+        height: 27
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -280,12 +280,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_6
       rect:
         serializedVersion: 2
-        x: 305
-        y: 303
-        width: 28
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 306
+        y: 304
+        width: 26
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -302,12 +302,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_7
       rect:
         serializedVersion: 2
-        x: 433
-        y: 303
-        width: 28
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 434
+        y: 304
+        width: 26
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -324,12 +324,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_8
       rect:
         serializedVersion: 2
-        x: 51
-        y: 175
-        width: 28
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 52
+        y: 176
+        width: 26
+        height: 27
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -346,12 +346,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_9
       rect:
         serializedVersion: 2
-        x: 179
-        y: 175
-        width: 28
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 180
+        y: 176
+        width: 26
+        height: 27
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -368,12 +368,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_10
       rect:
         serializedVersion: 2
-        x: 307
-        y: 175
-        width: 28
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 308
+        y: 176
+        width: 26
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -390,12 +390,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_11
       rect:
         serializedVersion: 2
-        x: 435
-        y: 175
-        width: 28
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 436
+        y: 176
+        width: 26
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -412,12 +412,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_12
       rect:
         serializedVersion: 2
-        x: 48
-        y: 47
-        width: 32
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 49
+        y: 48
+        width: 30
+        height: 27
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -434,12 +434,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_13
       rect:
         serializedVersion: 2
-        x: 176
-        y: 47
-        width: 32
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 177
+        y: 48
+        width: 30
+        height: 27
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -456,12 +456,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_14
       rect:
         serializedVersion: 2
-        x: 304
-        y: 47
-        width: 32
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 305
+        y: 48
+        width: 30
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -478,12 +478,12 @@ TextureImporter:
       name: Christmas_Snowman_G_Idle_15
       rect:
         serializedVersion: 2
-        x: 432
-        y: 47
-        width: 32
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 433
+        y: 48
+        width: 30
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -500,7 +500,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: c93cf9a64a8975149b7e814136d7e255
     internalID: 0
     vertices: []
     indices: 
@@ -509,7 +509,23 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Christmas_Snowman_G_Idle_0: -6599442409972848731
+      Christmas_Snowman_G_Idle_1: 2951006756286468094
+      Christmas_Snowman_G_Idle_10: 1510432423696765906
+      Christmas_Snowman_G_Idle_11: 8627150271048359280
+      Christmas_Snowman_G_Idle_12: 694783883575834145
+      Christmas_Snowman_G_Idle_13: 3686496706496545760
+      Christmas_Snowman_G_Idle_14: -9036427358106576069
+      Christmas_Snowman_G_Idle_15: -3106096400748387640
+      Christmas_Snowman_G_Idle_2: 7916833749018995251
+      Christmas_Snowman_G_Idle_3: -1649547939731020913
+      Christmas_Snowman_G_Idle_4: -5138865116057909751
+      Christmas_Snowman_G_Idle_5: 7029548849218015341
+      Christmas_Snowman_G_Idle_6: 1131334560493722883
+      Christmas_Snowman_G_Idle_7: 3521202759370243729
+      Christmas_Snowman_G_Idle_8: 4089704407699260802
+      Christmas_Snowman_G_Idle_9: 9047957233105817550
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

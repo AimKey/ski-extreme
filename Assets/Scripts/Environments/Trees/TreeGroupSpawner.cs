@@ -3,48 +3,44 @@
 public class TreeGroupSpawner : MonoBehaviour
 {
 
-    public GameObject[] cloudPrefabs;
-    public int cloudCount = 10;
+    [Header("Tree Prefabs")]
+    public GameObject[] treePrefabs;
 
-    public Vector2 xRange = new Vector2(-10f, 10f);
-    public Vector2 speedRange = new Vector2(0.1f, 0.6f);
+    [Header("Spawn Settings")]
+    public int minTreeCount = 3;
+    public int maxTreeCount = 5;
+    public float spacing = 0.6f;
+    public Vector2 randomYOffset = new Vector2(-0.1f, 0.1f); // Tùy chọn lệch trục Y
 
-    private float minY;
-    private float maxY;
+    [Header("Scale Settings")]
+    public float minScale = 0.9f;
+    public float maxScale = 1.3f;
 
     void Start()
     {
-        CalculateYBoundsFromCamera();
-
-        for (int i = 0; i < cloudCount; i++)
-        {
-            GameObject prefab = cloudPrefabs[Random.Range(0, cloudPrefabs.Length)];
-
-            float x = Random.Range(xRange.x, xRange.y);
-            float y = Random.Range(minY, maxY);
-            Vector3 spawnPos = new Vector3(x, y, 0f);
-
-            GameObject cloud = Instantiate(prefab, spawnPos, Quaternion.identity, transform);
-
-            CloudMove moveScript = cloud.GetComponent<CloudMove>();
-            if (moveScript != null)
-            {
-                moveScript.minSpeed = speedRange.x;
-                moveScript.maxSpeed = speedRange.y;
-                moveScript.moveSpeed = Random.Range(speedRange.x, speedRange.y);
-            }
-        }
+        SpawnTrees();
     }
 
-    void CalculateYBoundsFromCamera()
+    void SpawnTrees()
     {
-        Camera cam = Camera.main;
-        float camHeight = 2f * cam.orthographicSize;
-        float camBottom = cam.transform.position.y - camHeight / 2;
-        float camTop = cam.transform.position.y + camHeight / 2;
+        if (treePrefabs == null || treePrefabs.Length == 0)
+        {
+            Debug.LogWarning("No tree prefabs assigned.");
+            return;
+        }
 
-        minY = camBottom + 0.5f;
-        maxY = camTop - 0.5f;
+        int count = Random.Range(minTreeCount, maxTreeCount + 1);
+        float startX = -(count - 1) * spacing / 2f;
+
+        for (int i = 0; i < count; i++)
+        {
+            Vector3 offset = new Vector3(startX + i * spacing, Random.Range(randomYOffset.x, randomYOffset.y), 0f);
+            GameObject prefab = treePrefabs[Random.Range(0, treePrefabs.Length)];
+            GameObject tree = Instantiate(prefab, transform.position + offset, Quaternion.identity, transform);
+
+            float scale = Random.Range(minScale, maxScale);
+            tree.transform.localScale = new Vector3(scale, scale, 1f);
+        }
     }
 
 }

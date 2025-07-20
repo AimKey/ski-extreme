@@ -54,6 +54,9 @@ public class PlayerController : MonoBehaviour
     // Surface normal tst
     private Vector2 surfaceNormal = Vector2.up;
 
+    // Camera zoom effect
+    private CameraZoomEffect cameraZoomEffect;
+
     private void Awake()
     {
         if (Instance == null)
@@ -77,6 +80,9 @@ public class PlayerController : MonoBehaviour
         terrainManager = TerrainManager.Instance;
         // Init sound
         audioSource = GetComponent<AudioSource>();
+
+        // Init camera zoom effect
+        cameraZoomEffect = CameraZoomEffect.Instance;
     }
 
     // Update is called once per frame
@@ -218,6 +224,7 @@ public class PlayerController : MonoBehaviour
             }
 
             surfaceNormal = other.contacts[0].normal;
+            cameraZoomEffect.ResetZoom();
         }
     }
 
@@ -256,6 +263,7 @@ public class PlayerController : MonoBehaviour
         {
             Vector2 jumpVector = Vector2.up + Vector2.right * 0.1f; // Small forward push
             rb.AddForce(jumpVector.normalized * jumpForce, ForceMode2D.Impulse);
+            cameraZoomEffect?.ZoomOut();
         }
         else
         {

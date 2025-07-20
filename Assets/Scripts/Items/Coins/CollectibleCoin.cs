@@ -4,11 +4,11 @@ public class CollectibleCoin : MonoBehaviour
 {
     public int scoreValue = 1;
     public AudioClip collectSound;
-    public float lifetime = 10f;
+    //public float lifetime = 10f;
 
     private void Start()
     {
-        Destroy(gameObject, lifetime); // Tự động hủy sau lifetime giây
+        //Destroy(gameObject, lifetime); // Tự động hủy sau lifetime giây
     }
 
     private void OnTriggerEnter2D(Collider2D other)

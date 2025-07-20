@@ -13,11 +13,11 @@ public class ClouldGroupSpawner : MonoBehaviour
     [Header("Speed Settings")]
     public Vector2 speedRange = new Vector2(0.1f, 0.6f);
 
-    private Camera cam;
+    private UnityEngine.Camera cam;
 
     void Start()
     {
-        cam = Camera.main;
+        cam = UnityEngine.Camera.main;
         float camHeight = 2f * cam.orthographicSize;
         float camWidth = camHeight * cam.aspect;
 

@@ -14,6 +14,5 @@ namespace Assets.Scripts.Models
         public bool IsAlignToTerrain = true;
         public int ObjectCount = 1;
         public bool IsRandomSize = false;
-        public bool CanSpawnOnSlope = false; // If true, will spawn on slopes, otherwise only on flat surfaces
     }
 }

@@ -13,6 +13,7 @@ public class TerrainSprinker : MonoBehaviour
     public int MaxAttempts = 20;
     public List<DecorationPrefab> decorations;
 
+    private string previousDecorTag;
     public static TerrainSprinker Instance { get; private set; }
     private void Awake()
     {
@@ -43,8 +44,22 @@ public class TerrainSprinker : MonoBehaviour
                 Vector3 currentPoint = ssc.transform.TransformPoint(spline.GetPosition(i));
                 Vector3 nextPoint = ssc.transform.TransformPoint(spline.GetPosition(i + 1));
 
-                // Instantiate decoration
-                DecorationPrefab decor = GetRandomDecorationPrefab();
+                // Get random decoration prefab
+                DecorationPrefab decor = null;
+                // Make sure no same decoration with the same tag is place continously
+                if (!string.IsNullOrEmpty(previousDecorTag) && previousDecorTag == "Rock")
+                {
+                    var altDecor = GetDecorNotContainingTag(previousDecorTag);
+                    if (altDecor != null)
+                        decor = altDecor;
+                    else
+                        decor = GetRandomDecorationPrefab();
+                }
+                else
+                {
+                    decor = GetRandomDecorationPrefab();
+                }
+
                 if (decor != null)
                 {
                     var go = decor.Prefab;
@@ -52,6 +67,7 @@ public class TerrainSprinker : MonoBehaviour
                     {
                         // Pick a random point along this segment
                         var spawnPos = GetRandomXPlacement(prevPoint, currentPoint, previousDecorationPos);
+
                         // Adjust Y to surface, apply normal if needed
                         var (y, normal) = GetYPlacementRaycast(spawnPos);
                         spawnPos.y = y;
@@ -59,14 +75,16 @@ public class TerrainSprinker : MonoBehaviour
                         if (decor.IsAlignToTerrain)
                         {
                             var fullRotation = Quaternion.FromToRotation(Vector3.up, normal);
-                            rotation = Quaternion.Slerp(Quaternion.identity, fullRotation, 0.5f); // Half rotation
+                            rotation = Quaternion.Slerp(Quaternion.identity, fullRotation, 0.8f); // Half rotation
                         }
+
                         // Instantiate the decoration prefab
-                        PlaceDecoration(spawnPos, dynamicParentContainer, go, rotation);
+                        var spawned = PlaceDecoration(spawnPos, dynamicParentContainer, go, rotation);
                         RandomSize(decor.IsRandomSize, spawnPos, go);
 
                         // Update the previous decoration position
                         previousDecorationPos = spawnPos;
+                        previousDecorTag = spawned.tag;
                     }
                 }
             }
@@ -86,14 +104,14 @@ public class TerrainSprinker : MonoBehaviour
         {
             float distance = Vector3.Distance(previousDecorationPos, spawnPos);
             int attempts = 0;
-            Debug.Log($"[TerrainSprinker] Retry status: Distance: {distance} spacing: {spacing}, MaxAttempts: {MaxAttempts}");
+            //Debug.Log($"[TerrainSprinker] Retry status: Distance: {distance} spacing: {spacing}, MaxAttempts: {MaxAttempts}");
             while (distance < spacing && attempts < MaxAttempts)
             {
-                Debug.Log($"[TerrainSprinker] Distance between decorations at {previousDecorationPos} and {spawnPos} is too small: {distance}, re-adjusting. Point range {prevPoint} - {currentPoint}");
+                //Debug.Log($"[TerrainSprinker] Distance between decorations at {previousDecorationPos} and {spawnPos} is too small: {distance}, re-adjusting. Point range {prevPoint} - {currentPoint}");
                 t = Random.Range(0.2f, 0.8f);
                 spawnPos = Vector3.Lerp(previousDecorationPos, currentPoint, t);
                 distance = Vector3.Distance(previousDecorationPos, spawnPos);
-                Debug.Log($"[TerrainSprinker] New spawn position: {spawnPos}, distance: {distance}, spacing: {spacing}, max attempts:" + $" {MaxAttempts}");
+                //Debug.Log($"[TerrainSprinker] New spawn position: {spawnPos}, distance: {distance}, spacing: {spacing}, max attempts:" + $" {MaxAttempts}");
                 attempts++;
             }
             // Gurantee that the decoration is placed at least `spacing` distance away from the previous decoration if random is not enough
@@ -101,7 +119,7 @@ public class TerrainSprinker : MonoBehaviour
             {
                 spawnPos.x += Mathf.Sign(spawnPos.x - previousDecorationPos.x) * spacing;
             }
-            Debug.Log($"[TerrainSprinker] Final spawn position after adjustment: {spawnPos}, distance: {distance}, attempts: {attempts}");
+            //Debug.Log($"[TerrainSprinker] Final spawn position after adjustment: {spawnPos}, distance: {distance}, attempts: {attempts}");
 
         }
         return spawnPos;
@@ -110,20 +128,24 @@ public class TerrainSprinker : MonoBehaviour
 
     public (float y, Vector2 normal) GetYPlacementRaycast(Vector2 position)
     {
-        position.y = position.y + 200f;
+        position.y = position.y + 100f;
         RaycastHit2D hit = Physics2D.Raycast(position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
+        RaycastHit2D hitTest = Physics2D.Raycast(position, Vector2.down, Mathf.Infinity);
+        //Debug.Log($"[TerrainSprinker] Raycast hit layer: {hitTest.collider.name}");
         // Debug only
         Debug.DrawRay(position, Vector2.down * 200f, Color.red, 100f);
         if (hit.collider != null)
         {
+            //Debug.Log($"[TerrainSprinker] Ground found at position {position} with hit point {hit.point} and normal {hit.normal}");
             return (hit.point.y, hit.normal);
         }
+        //Debug.Log($"[TerrainSprinker] No ground found for position {position}. Using default Y position.");
         return (position.y, Vector2.up);
     }
 
-    public void PlaceDecoration(Vector3 worldPosition, GameObject parentContainer, GameObject prefab, Quaternion rotation)
+    public GameObject PlaceDecoration(Vector3 worldPosition, GameObject parentContainer, GameObject prefab, Quaternion rotation)
     {
-        Instantiate(prefab, worldPosition, rotation, parentContainer.transform);
+        return Instantiate(prefab, worldPosition, rotation, parentContainer.transform);
     }
 
     public DecorationPrefab GetRandomDecorationPrefab()
@@ -131,6 +153,17 @@ public class TerrainSprinker : MonoBehaviour
         if (decorations.Count == 0) return null;
         int i = Random.Range(0, decorations.Count);
         DecorationPrefab decoration = decorations[i];
+        return decoration;
+    }
+
+    public DecorationPrefab GetDecorNotContainingTag(string decorTag)
+    {
+        if (decorations.Count == 0) return null;
+        List<DecorationPrefab> filteredDecorations = decorations.FindAll(d => !d.Prefab.CompareTag(decorTag));
+
+        if (filteredDecorations.Count == 0) return null;
+        int i = Random.Range(0, filteredDecorations.Count);
+        DecorationPrefab decoration = filteredDecorations[i];
         return decoration;
     }
 

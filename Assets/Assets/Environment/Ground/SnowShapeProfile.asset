@@ -18,7 +18,7 @@ MonoBehaviour:
     m_Order: 0
     m_Sprites:
     - {fileID: -1643477301947782222, guid: 75d183f48753dc24bb5c6411976d1224, type: 3}
-  m_FillTexture: {fileID: 2800000, guid: 4abc066a599511a43a6bde240821adf1, type: 3}
+  m_FillTexture: {fileID: 2800000, guid: 48f04bbd1547b1c47a8464f21dd1fe4e, type: 3}
   m_CornerSprites:
   - m_CornerType: 0
     m_Sprites:
@@ -28,21 +28,21 @@ MonoBehaviour:
     - {fileID: 6079654497081031316, guid: 314e4ea346243cf40823b8975873fe4e, type: 3}
   - m_CornerType: 2
     m_Sprites:
-    - {fileID: -8289085470510098062, guid: 407730f12f0fce1428ae92f5882c3a34, type: 3}
+    - {fileID: -1643477301947782222, guid: 75d183f48753dc24bb5c6411976d1224, type: 3}
   - m_CornerType: 3
     m_Sprites:
-    - {fileID: -2900566863887562914, guid: 26fcd88a196f1c94a8247207d1cd20ec, type: 3}
+    - {fileID: -8289085470510098062, guid: 407730f12f0fce1428ae92f5882c3a34, type: 3}
   - m_CornerType: 4
     m_Sprites:
-    - {fileID: -4349450234521460316, guid: 9b2e71da933298c439d80187d5c323ad, type: 3}
+    - {fileID: -6977154653007388238, guid: 48f04bbd1547b1c47a8464f21dd1fe4e, type: 3}
   - m_CornerType: 5
     m_Sprites:
-    - {fileID: -1374896454427263244, guid: 1ec5d59ee33b09e4fb002b84c6d31b81, type: 3}
+    - {fileID: -6977154653007388238, guid: 48f04bbd1547b1c47a8464f21dd1fe4e, type: 3}
   - m_CornerType: 6
     m_Sprites:
-    - {fileID: 3524718481843428365, guid: d868fd0547bcd4140a488f53173fef4a, type: 3}
+    - {fileID: -6977154653007388238, guid: 48f04bbd1547b1c47a8464f21dd1fe4e, type: 3}
   - m_CornerType: 7
     m_Sprites:
-    - {fileID: 3524718481843428365, guid: d868fd0547bcd4140a488f53173fef4a, type: 3}
-  m_FillOffset: 0.439
+    - {fileID: -6977154653007388238, guid: 48f04bbd1547b1c47a8464f21dd1fe4e, type: 3}
+  m_FillOffset: 0.5
   m_UseSpriteBorders: 1

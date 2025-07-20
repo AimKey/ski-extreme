@@ -184,7 +184,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ShieldPowerUpAnimation_0: 3874646468315673226
+      ShieldPowerUpAnimation_1: -1473988864847619419
+      ShieldPowerUpAnimation_2: -5262227046627410942
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

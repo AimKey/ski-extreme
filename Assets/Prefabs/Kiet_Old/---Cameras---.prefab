@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4311804891351429784}
   - component: {fileID: 1754678990506804578}
   - component: {fileID: 5547288580525939047}
-  - component: {fileID: 7683917135068515599}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -30,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1432128506979825591}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -67.002655, y: 108.42, z: 0}
+  m_LocalPosition: {x: 60.517338, y: -0.07999992, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -71,7 +70,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 25
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -171,15 +170,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
---- !u!45 &7683917135068515599
-Skybox:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432128506979825591}
-  m_Enabled: 1
-  m_CustomSkybox: {fileID: 2100000, guid: c52c5d7968fa6c9499b0b5752f899bfb, type: 2}
 --- !u!1 &4958231232959634326
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,7 +198,7 @@ Transform:
   m_GameObject: {fileID: 4958231232959634326}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -67.002655, y: 108.42, z: 0}
+  m_LocalPosition: {x: 60.517338, y: -0.07999992, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -239,7 +229,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 40
-    OrthographicSize: 15
+    OrthographicSize: 25
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -271,11 +261,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TrackerSettings:
     BindingMode: 4
-    PositionDamping: {x: 1, y: 1, z: 1}
+    PositionDamping: {x: 0.5, y: 0.5, z: 1}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  FollowOffset: {x: 10, y: 0, z: -10}
+  FollowOffset: {x: 25, y: -4, z: -10}
 --- !u!114 &1008634657835409212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,7 +301,7 @@ GameObject:
   - component: {fileID: 252933236179799596}
   m_Layer: 0
   m_Name: ---Cameras---
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

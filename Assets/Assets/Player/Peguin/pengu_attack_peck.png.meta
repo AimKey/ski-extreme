@@ -67,7 +67,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -105,7 +105,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -384,7 +384,18 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      pengu_attack_peck_0: 1192600506784993921
+      pengu_attack_peck_1: 5479912991910723185
+      pengu_attack_peck_10: 8184050547800556815
+      pengu_attack_peck_2: -8472994782845924492
+      pengu_attack_peck_3: 4817532187762217425
+      pengu_attack_peck_4: 1604969249797934578
+      pengu_attack_peck_5: 8055335113738321193
+      pengu_attack_peck_6: 5960198502507600242
+      pengu_attack_peck_7: -8999521525135873046
+      pengu_attack_peck_8: 5903622588629790225
+      pengu_attack_peck_9: 7195236667567372504
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

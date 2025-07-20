@@ -58,7 +58,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -96,7 +96,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -309,7 +309,15 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      pengu_move_0: 6957172676761205743
+      pengu_move_1: 6881342469932789539
+      pengu_move_2: 5906962251757272196
+      pengu_move_3: -396016703969215239
+      pengu_move_4: 7031680190288900888
+      pengu_move_5: -6418862844784911413
+      pengu_move_6: -2600555115641808215
+      pengu_move_7: -7203246408296982035
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

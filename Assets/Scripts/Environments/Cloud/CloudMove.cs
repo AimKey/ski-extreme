@@ -10,30 +10,36 @@ public class CloudMove : MonoBehaviour
     [HideInInspector] public float moveSpeed;
 
     private float width;
-    private Camera mainCam;
+    private UnityEngine.Camera mainCam;
     private float screenLeft, screenRight;
 
     void Start()
     {
-        mainCam = Camera.main;
+        mainCam = UnityEngine.Camera.main;
         width = GetComponent<SpriteRenderer>().bounds.size.x;
-        UpdateScreenBounds();
         moveSpeed = Random.Range(minSpeed, maxSpeed);
     }
 
     void Update()
     {
+        UpdateScreenBounds();
+
         transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
 
         if (transform.position.x + width < screenLeft)
         {
             float newX = screenRight + width;
-            float newY = transform.position.y;
+            float camHeight = 2f * mainCam.orthographicSize;
+            float camMidY = mainCam.transform.position.y;
+            float camTop = camMidY + camHeight / 2f;
 
-            // reposition và random lại tốc độ
+            // Recalculate Y within the upper half of the screen
+            float newY = Random.Range(camMidY, camTop);
+
             transform.position = new Vector3(newX, newY, transform.position.z);
             moveSpeed = Random.Range(minSpeed, maxSpeed);
         }
+
     }
 
     void UpdateScreenBounds()
