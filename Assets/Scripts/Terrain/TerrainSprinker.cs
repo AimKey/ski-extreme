@@ -1,4 +1,4 @@
-using Assets.Scripts.Models;
+﻿using Assets.Scripts.Models;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +14,13 @@ public class TerrainSprinker : MonoBehaviour
     public List<DecorationPrefab> decorations;
 
     private string previousDecorTag;
+
+    [Header("Coin Settings")]
+    public GameObject coinPrefab;
+    public int minCoinCount = 3;
+    public int maxCoinCount = 6;
+    public float coinSpawningChance = 0.2f;
+    public float coinSpacing = 1f;
     public static TerrainSprinker Instance { get; private set; }
     private void Awake()
     {
@@ -86,6 +93,12 @@ public class TerrainSprinker : MonoBehaviour
                         previousDecorationPos = spawnPos;
                         previousDecorTag = spawned.tag;
                     }
+                }
+
+                // Place coins with a chance
+                if (Random.value < coinSpawningChance)
+                {
+                    PlaceCoinRow(prevPoint, currentPoint, dynamicParentContainer);
                 }
             }
 
@@ -176,6 +189,26 @@ public class TerrainSprinker : MonoBehaviour
             float noise = Mathf.PerlinNoise(spawnPos.x * 0.05f, 100f);
             float scale = Mathf.Lerp(0.9f, 2f, noise);
             go.transform.localScale = go.transform.localScale * scale;
+        }
+    }
+
+
+    public void PlaceCoinRow(Vector3 startPoint, Vector3 endPoint, GameObject parentContainer)
+    {
+        int coinCount = Random.Range(minCoinCount, maxCoinCount + 1);
+        Vector3 direction = (endPoint - startPoint).normalized;
+
+        for (int i = 0; i < coinCount; i++)
+        {
+            Vector3 spawnPos = startPoint + direction * (i * coinSpacing);
+
+            var (y, normal) = GetYPlacementRaycast(spawnPos);
+            spawnPos.y = y;
+            Quaternion rotation = Quaternion.identity;
+            var fullRotation = Quaternion.FromToRotation(Vector3.up, normal);
+            rotation = Quaternion.Slerp(Quaternion.identity, fullRotation, 0.8f); // Half rotation
+
+            Instantiate(coinPrefab, spawnPos, rotation, parentContainer.transform);
         }
     }
 

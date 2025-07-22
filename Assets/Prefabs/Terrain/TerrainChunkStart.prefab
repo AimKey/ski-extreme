@@ -277,7 +277,7 @@ MonoBehaviour:
   terrainTail: {fileID: 5195508933389838801, guid: 37768b3f4598fc84988482efebc63cd6, type: 3}
   terrainHead: {fileID: 5880095709287386730, guid: 3735872932b6ad84893507c96c8a29f5, type: 3}
   terrainHeightScale: 70
-  NumOfPoints: 30
+  NumOfPoints: 25
   DistanceBetweenPoints: 90
   NoiseScale: 0.8
   smoothAmount: 30
