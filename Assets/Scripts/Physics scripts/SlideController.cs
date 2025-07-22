@@ -63,9 +63,11 @@ public class SlideController : MonoBehaviour
     private static readonly Vector2 Down = Vector2.down;
     private static readonly Vector2 Zero2 = Vector2.zero;
     
-    // Add this to your existing private fields
+    // Jump interference prevention
     private int forceAirborneFrames = 0;
-    
+    private float lastJumpTime = -1f;
+    private const float JUMP_GRACE_PERIOD = 0.2f; // Prevent ground detection for 0.2s after jump
+
     #endregion
 
     #region Public Properties
@@ -90,8 +92,14 @@ public class SlideController : MonoBehaviour
     public void ForceAirborne()
     {
         isGrounded = false;
-        forceAirborneFrames = 3; // Skip ground detection for 3 frames
+        forceAirborneFrames = 5; // Increased from 3 to 5 frames
+        lastJumpTime = Time.time; // Track when jump occurred
     }
+
+    /// <summary>
+    /// Check if we're in the jump grace period
+    /// </summary>
+    public bool IsInJumpGracePeriod => Time.time - lastJumpTime < JUMP_GRACE_PERIOD;
 
     #endregion
 
@@ -229,6 +237,7 @@ public class SlideController : MonoBehaviour
     {
         rb.AddForce(Physics2D.gravity * (0.25f * speedFactor), ForceMode2D.Force);
         ClampLinearSpeed(GetActiveMaxSpeed());
+        // REMOVED: ApplyRotation() - let AirAutoBalance handle rotation when airborne
     }
     
     private void ApplySlopeForces()
@@ -254,6 +263,9 @@ public class SlideController : MonoBehaviour
     
     private void ApplyRotation()
     {
+        // ONLY apply rotation when grounded - don't interfere with air rotation
+        if (!isGrounded) return;
+        
         float slopeDegrees = Mathf.Atan2(groundNormal.y, groundNormal.x) * Mathf.Rad2Deg - 90f;
         float yawStep = yawInput * turnSpeed * GetActiveSpeedFactor() * Time.fixedDeltaTime;
         
@@ -263,20 +275,19 @@ public class SlideController : MonoBehaviour
     
     private void ClampLinearSpeed(float maxSpeed)
     {
-        float currentSpeedSqr = rb.velocity.sqrMagnitude;
+        float currentSpeedSqr = rb.linearVelocity.sqrMagnitude; // FIXED: Changed from rb.linearVelocity
         
         // Enforce rightward movement
-        Vector2 velocity = rb.velocity;
+        Vector2 velocity = rb.linearVelocity; // FIXED: Changed from rb.linearVelocity
         if (velocity.x < 0)
         {
-            velocity.x = Mathf.Abs(velocity.x); // Flip leftward velocity to rightward
+            velocity.x = Mathf.Abs(velocity.x);
         }
         
         // Enforce minimum speed
         if (currentSpeedSqr < minSlideSpeedSq && currentSpeedSqr > 1e-4f)
         {
             velocity = velocity.normalized * minSlideSpeed;
-            // Ensure minimum rightward velocity
             if (velocity.x < minSlideSpeed * 0.5f)
             {
                 velocity.x = minSlideSpeed * 0.5f;
@@ -288,7 +299,7 @@ public class SlideController : MonoBehaviour
             velocity = Vector2.ClampMagnitude(velocity, maxSpeed);
         }
         
-        rb.velocity = velocity;
+        rb.linearVelocity = velocity; // FIXED: Changed from rb.linearVelocity
     }
     
     #endregion
@@ -305,10 +316,24 @@ public class SlideController : MonoBehaviour
             return;
         }
         
+        // Skip ground detection during jump grace period
+        if (IsInJumpGracePeriod)
+        {
+            isGrounded = false;
+            return;
+        }
+        
+        // Additional check: if moving upward fast, don't ground
+        if (rb.linearVelocity.y > 2f) // FIXED: Changed from rb.linearVelocity
+        {
+            isGrounded = false;
+            return;
+        }
+        
         isGrounded = false;
         
         const float skinWidth = 0.05f;
-        float castDistance = Mathf.Max(rb.velocity.magnitude * Time.fixedDeltaTime + skinWidth, 0.25f);
+        float castDistance = Mathf.Max(rb.linearVelocity.magnitude * Time.fixedDeltaTime + skinWidth, 0.25f); // FIXED
         
         // Try straight down cast
         if (PerformSweepCast(Down, castDistance, out RaycastHit2D hitInfo))
@@ -318,7 +343,7 @@ public class SlideController : MonoBehaviour
         }
         
         // Try forward-down cast
-        Vector2 forwardDown = (Down + rb.velocity.normalized * 0.35f).normalized;
+        Vector2 forwardDown = (Down + rb.linearVelocity.normalized * 0.35f).normalized; // FIXED
         if (PerformSweepCast(forwardDown, castDistance, out hitInfo))
         {
             SetGroundInfo(hitInfo);
@@ -326,7 +351,8 @@ public class SlideController : MonoBehaviour
         }
         
         // Fallback: circle cast
-        var circleHit = Physics2D.CircleCast(transform.position, 0.45f, Down, castDistance, groundMask);
+        float circleRadius = IsInJumpGracePeriod ? 0.3f : 0.45f;
+        var circleHit = Physics2D.CircleCast(transform.position, circleRadius, Down, castDistance, groundMask);
         if (IsValidGroundHit(circleHit))
         {
             SetGroundInfo(circleHit);
@@ -342,13 +368,26 @@ public class SlideController : MonoBehaviour
     
     private bool IsValidGroundHit(RaycastHit2D hit)
     {
-        return hit.collider != null && 
-               hit.fraction > 0f && 
-               Vector2.Angle(hit.normal, Vector2.up) <= maxGroundAngle;
+        if (hit.collider == null || hit.fraction <= 0f) 
+            return false;
+            
+        float angleToUp = Vector2.Angle(hit.normal, Vector2.up);
+        
+        // During jump grace period, be more strict about what counts as ground
+        float maxAllowedAngle = IsInJumpGracePeriod ? maxGroundAngle * 0.8f : maxGroundAngle;
+        
+        return angleToUp <= maxAllowedAngle;
     }
     
     private void SetGroundInfo(RaycastHit2D hit)
     {
+        // Extra validation during jump grace period
+        if (IsInJumpGracePeriod)
+        {
+            // Only ground if we're clearly moving downward
+            if (rb.linearVelocity.y > -1f) return; // FIXED: Changed from rb.linearVelocity
+        }
+        
         isGrounded = true;
         groundNormal = hit.normal;
     }

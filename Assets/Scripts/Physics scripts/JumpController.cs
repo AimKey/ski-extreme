@@ -143,14 +143,14 @@ public class JumpController : MonoBehaviour
     
     private void ForceAirborneState()
     {
-        // Tell SlideController to skip ground detection for a few frames
+        // Tell SlideController to skip ground detection
         if (slide != null)
         {
             slide.ForceAirborne();
         }
         
         // Update our own ground tracking
-        lastGroundedTime = Time.time - coyoteTime - 0.1f; // Force invalid coyote time
+        lastGroundedTime = Time.time - coyoteTime - 0.1f;
     }
     
     private Vector2 CalculateJumpImpulse()
@@ -174,19 +174,10 @@ public class JumpController : MonoBehaviour
     
     private float CalculateRequiredVerticalVelocity()
     {
-        // Use kinematic equation: v = √(2gh) to find velocity needed for target height
         float gravity = Mathf.Abs(Physics2D.gravity.y * rb.gravityScale);
         float targetVelocity = Mathf.Sqrt(2f * gravity * desiredJumpHeight);
         
-        // Don't subtract current velocity on slopes - can cause issues
-        float currentVerticalVelocity = rb.velocity.y;
-        
-        // Only subtract if we're moving significantly upward already
-        if (currentVerticalVelocity > 2f)
-        {
-            return targetVelocity - currentVerticalVelocity;
-        }
-        
+        // Don't subtract current velocity - this was causing issues
         return targetVelocity;
     }
     
@@ -216,32 +207,31 @@ public class JumpController : MonoBehaviour
     
     private void ApplyJumpImpulse(Vector2 impulse)
     {
-        // More aggressive velocity clearing on slopes
-        Vector2 currentVelocity = rb.velocity;
+        // Clear any conflicting velocity
+        Vector2 currentVelocity = rb.linearVelocity;
         
-        // Clear any downward velocity completely
+        // Always clear downward velocity
         if (currentVelocity.y < 0f)
         {
             currentVelocity.y = 0f;
         }
         
-        // On steep slopes, also clear some horizontal velocity to prevent interference
+        // On slopes, reduce horizontal velocity that might cause ground re-detection
         Vector2 normal = GetJumpNormal();
         float slopeAngle = Vector2.Angle(normal, Vector2.up);
         
-        if (slopeAngle > 30f) // On steep slopes
+        if (slopeAngle > 25f) // On moderate to steep slopes
         {
-            // Reduce horizontal velocity that might interfere with jump
-            currentVelocity.x *= 0.7f;
+            currentVelocity.x *= 0.6f; // Reduce horizontal momentum
         }
         
-        rb.velocity = currentVelocity;
+        rb.linearVelocity = currentVelocity;
         
-        // Apply jump impulse
+        // Apply the jump impulse
         rb.AddForce(impulse, ForceMode2D.Impulse);
-    
-        // Skip ground forces for one frame to prevent interference
-        skipGroundFrame = true;
+        
+        // Additional safety: move player slightly up to avoid immediate ground contact
+        transform.position += Vector3.up * 0.05f;
     }
     
     #endregion
