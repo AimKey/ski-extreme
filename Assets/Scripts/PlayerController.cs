@@ -100,7 +100,10 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyConstantForce()
     {
-        rb.AddForce(-surfaceNormal * 300f, ForceMode2D.Force);
+        //if (isGrounded)
+        //{
+        //    rb.AddForce(-surfaceNormal * 300f, ForceMode2D.Force);
+        //}
     }
 
     private void HandlePlayerRotation()
