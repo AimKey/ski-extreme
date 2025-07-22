@@ -132,22 +132,50 @@ public class SlideController : MonoBehaviour
         else
             HandleAirbornePhysics();
     }
-    
+
     #endregion
 
     #region Initialization
-    
+
     private void InitializeComponents()
     {
         rb = GetComponent<Rigidbody2D>();
+        SetupNoBounceMaterial(); // Add this line
     }
+
+    private void SetupNoBounceMaterial()
+{
+    // Create a no-bounce physics material
+    PhysicsMaterial2D noBounceMaterial = new PhysicsMaterial2D("NoBounce")
+    {
+        friction = 0.1f,
+        bounciness = 0f,            // Zero bounciness
+        frictionCombine = PhysicsMaterialCombine2D.Average,
+        bounceCombine = PhysicsMaterialCombine2D.Minimum
+    };
+    
+    // Apply to all colliders on this GameObject
+    Collider2D[] colliders = GetComponents<Collider2D>();
+    foreach (Collider2D col in colliders)
+    {
+        col.sharedMaterial = noBounceMaterial;
+    }
+    
+    // Also apply to child colliders if needed
+    Collider2D[] childColliders = GetComponentsInChildren<Collider2D>();
+    foreach (Collider2D col in childColliders)
+    {
+        col.sharedMaterial = noBounceMaterial;
+    }
+}
     
     private void InitializePhysics()
     {
         rb.freezeRotation = false;
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        rb.linearDamping = 0f;
+        rb.linearDamping = 0.2f; // Add slight damping to reduce bouncing
+        rb.gravityScale = 1f;
         Physics2D.queriesStartInColliders = false;
     }
     
