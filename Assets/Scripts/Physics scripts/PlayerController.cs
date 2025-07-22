@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     private bool isInvincible = false;
     private bool isMagneticMode = false;
     private float magneticTimer = 0f;
+    private float invincibilityTimer = 0f; // Timer for manual invincibility duration
     
     #endregion
 
@@ -122,10 +123,58 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Invincibility System
-    
+
+    /// <summary>
+    /// Activates invincibility mode for a specified duration
+    /// </summary>
+    /// <param name="duration">How long invincibility should last in seconds</param>
+    public void EnterInvincibleMode(float duration)
+    {
+        if (!isInvincible)
+        {
+            isInvincible = true;
+            invincibilityTimer = duration;
+            OnInvincibilityStart();
+        }
+        else
+        {
+            // Refresh timer if already invincible (take the longer duration)
+            invincibilityTimer = Mathf.Max(invincibilityTimer, duration);
+        }
+    }
+
+    /// <summary>
+    /// Manually exits invincible mode
+    /// </summary>
+    public void ExitInvincibleMode()
+    {
+        if (isInvincible)
+        {
+            isInvincible = false;
+            invincibilityTimer = 0f;
+            OnInvincibilityEnd();
+        }
+    }
+
     private void UpdateInvincibilityState()
     {
-        bool shouldBeInvincible = slide.IsBoostActive;
+        // Handle boost-based invincibility
+        bool shouldBeInvincibleFromBoost = slide.IsBoostActive;
+        
+        // Handle manual/timed invincibility
+        if (invincibilityTimer > 0f)
+        {
+            invincibilityTimer -= Time.deltaTime;
+            
+            // Timer expired
+            if (invincibilityTimer <= 0f && !shouldBeInvincibleFromBoost)
+            {
+                DisableInvincibility();
+            }
+        }
+        
+        // Enable invincibility if boost is active or timer is running
+        bool shouldBeInvincible = shouldBeInvincibleFromBoost || invincibilityTimer > 0f;
         
         if (shouldBeInvincible && !isInvincible)
         {
@@ -136,38 +185,48 @@ public class PlayerController : MonoBehaviour
             DisableInvincibility();
         }
     }
-    
+
     private void EnableInvincibility()
     {
         isInvincible = true;
         OnInvincibilityStart();
     }
-    
+
     private void DisableInvincibility()
     {
         isInvincible = false;
+        invincibilityTimer = 0f; // Reset timer
         OnInvincibilityEnd();
     }
-    
+
     #endregion
 
     #region Magnetic Mode System
-    
+
     /// <summary>
     /// Activates magnetic mode for enhanced ground adherence
     /// </summary>
     public void EnterMagneticMode()
     {
+        EnterMagneticMode(magneticDuration); // Use default duration
+    }
+
+    /// <summary>
+    /// Activates magnetic mode for a specified duration
+    /// </summary>
+    /// <param name="duration">How long magnetic mode should last in seconds</param>
+    public void EnterMagneticMode(float duration)
+    {
         if (!isMagneticMode)
         {
             isMagneticMode = true;
-            magneticTimer = magneticDuration;
+            magneticTimer = duration;
             OnMagneticModeStart();
         }
         else
         {
-            // Refresh timer if already active
-            magneticTimer = magneticDuration;
+            // Refresh timer if already active (take the longer duration)
+            magneticTimer = Mathf.Max(magneticTimer, duration);
         }
     }
     
@@ -305,7 +364,7 @@ public class PlayerController : MonoBehaviour
     
     private void FreezePlayerMovement()
     {
-        rb.velocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
         rb.isKinematic = true;
     }
