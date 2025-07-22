@@ -125,29 +125,44 @@ public class JumpController : MonoBehaviour
     #region Jump System
     
     private void HandleJumpInput()
-    {
-        if (!Input.GetKeyDown(KeyCode.Space)) return;
-        if (!CanJump) return;
-        
-        PerformJump();
-    }
+{
+    if (!Input.GetKeyDown(KeyCode.Space)) return;
+    if (!CanJump) return;
+    
+    PerformJump();
+}
     
     private void PerformJump()
     {
         Vector2 jumpImpulse = CalculateJumpImpulse();
         ApplyJumpImpulse(jumpImpulse);
+        
+        // Force the player to be considered airborne immediately
+        ForceAirborneState();
+    }
+    
+    private void ForceAirborneState()
+    {
+        // Tell SlideController to skip ground detection for a few frames
+        if (slide != null)
+        {
+            slide.ForceAirborne();
+        }
+        
+        // Update our own ground tracking
+        lastGroundedTime = Time.time - coyoteTime - 0.1f; // Force invalid coyote time
     }
     
     private Vector2 CalculateJumpImpulse()
     {
         // Get reference normal (current ground or last known)
         Vector2 normal = GetJumpNormal();
-        
+
         // Calculate required vertical velocity for target height
         float requiredVerticalVelocity = CalculateRequiredVerticalVelocity();
-        
+
         // Build impulse based on slope compensation settings
-        return compensateSlope 
+        return compensateSlope
             ? CalculateSlopeCompensatedImpulse(normal, requiredVerticalVelocity)
             : CalculateVerticalImpulse(requiredVerticalVelocity);
     }
@@ -163,8 +178,16 @@ public class JumpController : MonoBehaviour
         float gravity = Mathf.Abs(Physics2D.gravity.y * rb.gravityScale);
         float targetVelocity = Mathf.Sqrt(2f * gravity * desiredJumpHeight);
         
-        // Adjust for current downward velocity to maintain consistent apex
-        return targetVelocity - Mathf.Max(rb.velocity.y, 0f);
+        // Don't subtract current velocity on slopes - can cause issues
+        float currentVerticalVelocity = rb.velocity.y;
+        
+        // Only subtract if we're moving significantly upward already
+        if (currentVerticalVelocity > 2f)
+        {
+            return targetVelocity - currentVerticalVelocity;
+        }
+        
+        return targetVelocity;
     }
     
     private Vector2 CalculateSlopeCompensatedImpulse(Vector2 normal, float requiredVy)
@@ -193,15 +216,30 @@ public class JumpController : MonoBehaviour
     
     private void ApplyJumpImpulse(Vector2 impulse)
     {
-        // Cancel downward velocity to avoid wasting impulse
-        if (rb.velocity.y < 0f)
+        // More aggressive velocity clearing on slopes
+        Vector2 currentVelocity = rb.velocity;
+        
+        // Clear any downward velocity completely
+        if (currentVelocity.y < 0f)
         {
-            rb.velocity = new Vector2(rb.velocity.x, 0f);
+            currentVelocity.y = 0f;
         }
+        
+        // On steep slopes, also clear some horizontal velocity to prevent interference
+        Vector2 normal = GetJumpNormal();
+        float slopeAngle = Vector2.Angle(normal, Vector2.up);
+        
+        if (slopeAngle > 30f) // On steep slopes
+        {
+            // Reduce horizontal velocity that might interfere with jump
+            currentVelocity.x *= 0.7f;
+        }
+        
+        rb.velocity = currentVelocity;
         
         // Apply jump impulse
         rb.AddForce(impulse, ForceMode2D.Impulse);
-        
+    
         // Skip ground forces for one frame to prevent interference
         skipGroundFrame = true;
     }
