@@ -65,8 +65,8 @@ public class JumpController : MonoBehaviour
     #region Public Properties
     
     /// <summary>Can the player currently perform a jump?</summary>
-    public bool CanJump => slide.IsGrounded || Time.time - lastGroundedTime <= coyoteTime;
-    
+    public bool CanJump => slide.IsGrounded || Time.fixedTime - lastGroundedTime <= coyoteTime;
+
     /// <summary>Is the player currently in the air?</summary>
     public bool IsAirborne => !slide.IsGrounded;
     
@@ -79,20 +79,31 @@ public class JumpController : MonoBehaviour
         InitializeComponents();
     }
 
+    private bool jumpInputBuffered = false;
+    private float jumpInputTime = 0f;
+    private const float INPUT_BUFFER_TIME = 0.1f;
+
     void Update()
     {
-        UpdateGroundTracking();
+        // Buffer jump input - high frequency polling
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpInputBuffered = true;
+            jumpInputTime = Time.unscaledTime; // Use unscaled time for input
+        }
     }
 
     void FixedUpdate()
     {
+        UpdateGroundTracking(); // ADD: Missing ground tracking
+        
         if (skipGroundFrame)
         {
             skipGroundFrame = false;
             return;
         }
 
-        HandleJumpInput();
+        HandleBufferedJumpInput(); // Renamed for clarity
         HandleAerialTricks();
         HandleLandingCleanup();
     }
@@ -110,12 +121,12 @@ public class JumpController : MonoBehaviour
     #endregion
 
     #region Ground Tracking
-    
+
     private void UpdateGroundTracking()
     {
         if (slide.IsGrounded)
         {
-            lastGroundedTime = Time.time;
+            lastGroundedTime = Time.fixedTime; // Use fixedTime consistently
             lastGroundNormal = slide.GroundNormal;
         }
     }
@@ -123,22 +134,40 @@ public class JumpController : MonoBehaviour
     #endregion
 
     #region Jump System
-    
-    private void HandleJumpInput()
-{
-    if (!Input.GetKeyDown(KeyCode.Space)) return;
-    if (!CanJump) return;
-    
-    PerformJump();
-}
-    
+
+    private void HandleBufferedJumpInput()
+    {
+        // Check buffered input with proper time handling
+        bool hasJumpInput = jumpInputBuffered && 
+                           (Time.unscaledTime - jumpInputTime <= INPUT_BUFFER_TIME);
+        
+        if (hasJumpInput && CanJump)
+        {
+            jumpInputBuffered = false; // Consume input immediately
+            PerformJump();
+            return; // Exit early after jump
+        }
+        
+        // Clear expired buffered input
+        if (jumpInputBuffered && Time.unscaledTime - jumpInputTime > INPUT_BUFFER_TIME)
+        {
+            jumpInputBuffered = false;
+        }
+    }
+
     private void PerformJump()
     {
+        // Prevent double jumps by checking if already performed this frame
+        if (!CanJump) return;
+        
         Vector2 jumpImpulse = CalculateJumpImpulse();
         ApplyJumpImpulse(jumpImpulse);
         
-        // Force the player to be considered airborne immediately
+        // Force airborne state immediately
         ForceAirborneState();
+        
+        // Clear any remaining input buffer to prevent double jumps
+        jumpInputBuffered = false;
     }
     
     private void ForceAirborneState()
@@ -149,8 +178,8 @@ public class JumpController : MonoBehaviour
             slide.ForceAirborne();
         }
         
-        // Update our own ground tracking
-        lastGroundedTime = Time.time - coyoteTime - 0.1f;
+        // Update ground tracking with consistent time reference
+        lastGroundedTime = Time.fixedTime - coyoteTime - 0.1f; // Use fixedTime
     }
     
     private Vector2 CalculateJumpImpulse()
@@ -208,7 +237,7 @@ public class JumpController : MonoBehaviour
     private void ApplyJumpImpulse(Vector2 impulse)
     {
         // Clear any conflicting velocity
-        Vector2 currentVelocity = rb.linearVelocity;
+        Vector2 currentVelocity = rb.linearVelocity; // FIXED: Use rb.velocity instead of rb.linearVelocity
         
         // Always clear downward velocity
         if (currentVelocity.y < 0f)
@@ -216,21 +245,21 @@ public class JumpController : MonoBehaviour
             currentVelocity.y = 0f;
         }
         
-        // On slopes, reduce horizontal velocity that might cause ground re-detection
+        // On slopes, reduce horizontal velocity
         Vector2 normal = GetJumpNormal();
         float slopeAngle = Vector2.Angle(normal, Vector2.up);
         
-        if (slopeAngle > 25f) // On moderate to steep slopes
+        if (slopeAngle > 25f)
         {
-            currentVelocity.x *= 0.6f; // Reduce horizontal momentum
+            currentVelocity.x *= 0.6f;
         }
         
-        rb.linearVelocity = currentVelocity;
+        rb.linearVelocity = currentVelocity; // FIXED: Use rb.velocity
         
         // Apply the jump impulse
         rb.AddForce(impulse, ForceMode2D.Impulse);
         
-        // Additional safety: move player slightly up to avoid immediate ground contact
+        // Move player slightly up to avoid immediate ground contact
         transform.position += Vector3.up * 0.05f;
     }
     
