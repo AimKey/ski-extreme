@@ -305,7 +305,7 @@ public class PlayerController : MonoBehaviour
     
     private void FreezePlayerMovement()
     {
-        rb.velocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
         rb.isKinematic = true;
     }

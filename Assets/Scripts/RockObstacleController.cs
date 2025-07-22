@@ -21,30 +21,30 @@ public class RockObstacleController : MonoBehaviour
     // Use to allow player to ramp through the rock
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            // Prevent multiple triggers from destroying the rock
-            if (isDestroyed) return;
-            else isDestroyed = true;
-            PlayerController playerController = PlayerController.Instance;
-            // If player is boosting, destroy the rock instead of losing the game
-            if (playerController.isBoosting && other.IsTouching(destroyCollider))
-            {
-                PlayerController.Instance.RampingRockTrickHandler();
-                ShakeScreen();
-                breakRockAudioSource.Play();
-                Debug.Log("Player is boosting and hit the rock, destroying the rock.");
-				Instantiate(rockDestroyedVFX, transform.position, Quaternion.identity);
-                // Turn off the rock sprite renderer to hide the rock
-                GetComponent<SpriteRenderer>().enabled = false;
-                Destroy(gameObject, breakRockAudioSource.clip.length);
-            }
-            else if (other.IsTouching(destroyCollider))
-            {
-                Debug.Log("Player is touching the destroy collider, triggering game over.");
-                //playerController.PlayerGameOver();
-            }
-        }
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        // Prevent multiple triggers from destroying the rock
+    //        if (isDestroyed) return;
+    //        else isDestroyed = true;
+    //        //PlayerController playerController = PlayerController.Instance;
+    //        // If player is boosting, destroy the rock instead of losing the game
+    //        if (playerController.isBoosting && other.IsTouching(destroyCollider))
+    //        {
+    //            //PlayerController.Instance.RampingRockTrickHandler();
+    //            ShakeScreen();
+    //            breakRockAudioSource.Play();
+    //            Debug.Log("Player is boosting and hit the rock, destroying the rock.");
+				//Instantiate(rockDestroyedVFX, transform.position, Quaternion.identity);
+    //            // Turn off the rock sprite renderer to hide the rock
+    //            GetComponent<SpriteRenderer>().enabled = false;
+    //            Destroy(gameObject, breakRockAudioSource.clip.length);
+    //        }
+    //        else if (other.IsTouching(destroyCollider))
+    //        {
+    //            Debug.Log("Player is touching the destroy collider, triggering game over.");
+    //            //playerController.PlayerGameOver();
+    //        }
+    //    }
     }
 
     private void ShakeScreen()

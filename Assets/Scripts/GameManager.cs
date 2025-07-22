@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
     public void PlayerWon()
     {
         // Stop the player script
-        PlayerController.Instance.enabled = false;
+        //PlayerController.Instance.enabled = false;
         // Stop the surface and player movement
         //LevelTerrainController.Instance.SetSurfaceSpeed(0f);
         // Show the win menu

@@ -6,7 +6,6 @@ using UnityEngine;
 /// - Provides speed boosts when tricks are performed
 /// - Manages both grounded and airborne physics
 /// </summary>
-[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 [DefaultExecutionOrder(-100)]
 public class SlideController : MonoBehaviour
 {
