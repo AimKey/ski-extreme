@@ -370,6 +370,34 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.IncreaseScoreFromPlayerTrick(GameConstants.RockSmash);
     }
 
+    // Method to handle bouncing off rocks when hit by body collider
+    public void BounceOffRock(Vector2 rockPosition)
+    {
+        // Calculate bounce direction (away from rock)
+        Vector2 playerPosition = transform.position;
+        Vector2 bounceDirection = (playerPosition - rockPosition).normalized;
+        
+        // Add some upward force to make the bounce more dramatic
+        bounceDirection.y = Mathf.Max(bounceDirection.y, 0.3f) * 1.2f; // Rock bounce upward multiplier
+        bounceDirection = bounceDirection.normalized;
+        
+        // Apply bounce force
+        Vector2 bounceForce = bounceDirection * 800f; // Rock bounce force
+        rb.AddForce(bounceForce, ForceMode2D.Impulse);
+        
+        // Add some rotation for visual effect
+        float rotationForce = UnityEngine.Random.Range(-200f, 200f);
+        rb.AddTorque(rotationForce);
+        
+        Debug.Log($"Player bounced off rock! Force: {bounceForce}, Direction: {bounceDirection}");
+        
+        // Optional: Play bounce sound or particle effect here
+        if (audioSource != null && trickPerformedSound != null)
+        {
+            audioSource.PlayOneShot(trickPerformedSound);
+        }
+    }
+
     private void DampLandingVelocity()
     {
         // Get current velocity

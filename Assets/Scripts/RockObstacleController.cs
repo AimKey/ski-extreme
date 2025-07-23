@@ -26,11 +26,21 @@ public class RockObstacleController : MonoBehaviour
         {
             // Prevent multiple triggers from destroying the rock
             if (isDestroyed) return;
-            else isDestroyed = true;
+            
             PlayerController playerController = PlayerController.Instance;
-            // If player is boosting, destroy the rock instead of losing the game
-            if (playerController.isBoosting && other.IsTouching(destroyCollider))
+            
+            // Debug information
+            bool touchingDestroy = other.IsTouching(destroyCollider);
+            bool touchingBounce = other.IsTouching(bounceCollider);
+            bool isBoosting = playerController.isBoosting;
+            bool isBoxCollider = other is BoxCollider2D;
+            
+            Debug.Log($"Rock collision debug - Boosting: {isBoosting}, TouchingDestroy: {touchingDestroy}, TouchingBounce: {touchingBounce}, IsBoxCollider: {isBoxCollider}");
+            
+            // PRIORITY 1: If player is boosting, check for destruction first (regardless of collider type)
+            if (isBoosting && touchingDestroy)
             {
+                isDestroyed = true; // Mark as destroyed
                 PlayerController.Instance.RampingRockTrickHandler();
                 ShakeScreen();
                 
@@ -38,7 +48,7 @@ public class RockObstacleController : MonoBehaviour
                 if (breakRockAudioSource != null)
                 {
                     breakRockAudioSource.Play();
-                    Debug.Log("Player is boosting and hit the rock, destroying the rock.");
+                    Debug.Log("Player is boosting and hit the destroy area, destroying the rock.");
                     
                     // Spawn VFX if available
                     if (rockDestroyedVFX != null)
@@ -57,7 +67,7 @@ public class RockObstacleController : MonoBehaviour
                 else
                 {
                     Debug.LogWarning("AudioSource not found on rock, destroying without sound.");
-                    Debug.Log("Player is boosting and hit the rock, destroying the rock.");
+                    Debug.Log("Player is boosting and hit the destroy area, destroying the rock.");
                     
                     // Spawn VFX if available
                     if (rockDestroyedVFX != null)
@@ -73,11 +83,24 @@ public class RockObstacleController : MonoBehaviour
                     GetComponent<SpriteRenderer>().enabled = false;
                     Destroy(gameObject, 1f); // Use default 1 second delay
                 }
+                return; // Exit early after destruction
             }
-            else if (other.IsTouching(destroyCollider))
+            
+            // PRIORITY 2: If not boosting and hitting destroy area, game over
+            if (touchingDestroy)
             {
-                Debug.Log("Player is touching the destroy collider, triggering game over.");
+                isDestroyed = true; // Mark as destroyed for this path
+                Debug.Log("Player is touching the destroy collider without boost, triggering game over.");
                 playerController.PlayerGameOver();
+                return; // Exit early after game over
+            }
+            
+            // PRIORITY 3: If hitting bounce area (and not destroy area), bounce
+            if (isBoxCollider && touchingBounce && !touchingDestroy)
+            {
+                Debug.Log("Player's body hit the rock bounce collider - bouncing!");
+                playerController.BounceOffRock(transform.position);
+                return; // Don't destroy or game over, just bounce
             }
         }
     }
