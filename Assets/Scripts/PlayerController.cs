@@ -1,4 +1,5 @@
 using Assets.Scripts.Constants;
+using NUnit.Framework;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -120,19 +121,19 @@ public class PlayerController : MonoBehaviour
         float rotationAmount = 0f;
 
         // Check for space key input (counter-clockwise rotation)
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && !GameManager.Instance.IsGamePaused && !IsPlayerLost)
         {
             rotationAmount = -rotationSpeed * Time.deltaTime; // Negative for counter-clockwise
         }
-        else
-        {
-            // Apply rotation based on left/right input when not holding space
-            float rotationInput = rotateLeftAction.ReadValue<float>() - rotateRightAction.ReadValue<float>();
-            if (rotationInput != 0f)
-            {
-                rotationAmount = rotationInput * rotationSpeed * Time.deltaTime;
-            }
-        }
+        // else
+        // {
+        //     // Apply rotation based on left/right input when not holding space
+        //     float rotationInput = rotateLeftAction.ReadValue<float>() - rotateRightAction.ReadValue<float>();
+        //     if (rotationInput != 0f)
+        //     {
+        //         rotationAmount = rotationInput * rotationSpeed * Time.deltaTime;
+        //     }
+        // }
 
         // Apply the rotation
         if (rotationAmount != 0f)
@@ -140,8 +141,8 @@ public class PlayerController : MonoBehaviour
             rb.MoveRotation(rb.rotation + rotationAmount);
         }
 
-        // Handle player performing tricks related to rotations
-        //TrickHandler(rotationAmount);
+        // // Handle player performing tricks related to rotations
+        // TrickHandler(rotationAmount);
     }
 
     private void TrickHandler(float rotationAmount)
