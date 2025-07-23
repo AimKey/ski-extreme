@@ -485,8 +485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556348c594b735341879c07eb6719e18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balanceSpeed: 100
-  lookAheadDistance: 15
+  balanceSpeed: 140
+  lookAheadDistance: 20
   minAngleDifference: 5
   groundLayerMask:
     serializedVersion: 2

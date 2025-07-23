@@ -45,6 +45,12 @@ public class PlayerController : MonoBehaviour
     private float boostTimer;
     private TerrainManager terrainManager;
 
+    // Landing damping variables
+    [Header("Landing Settings")]
+    [SerializeField] private float landingDampingFactor = 0.3f; // How much to reduce bounce (0-1)
+    [SerializeField] private float maxLandingVelocity = 15f; // Maximum safe landing velocity
+    [SerializeField] private float velocityDampingThreshold = 8f; // Minimum velocity to apply damping
+
     // Magnetic mode variables
     [Header("Magnetic Mode Settings")]
     [SerializeField] private float magneticRange = 30f; // Range to attract coins
@@ -282,6 +288,32 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.IncreaseScoreFromPlayerTrick(GameConstants.RockSmash);
     }
 
+    private void DampLandingVelocity()
+    {
+        // Get current velocity
+        Vector2 currentVelocity = rb.linearVelocity;
+        
+        // Only apply damping if the downward velocity is significant
+        if (currentVelocity.y < -velocityDampingThreshold)
+        {
+            // Calculate damping factor based on impact severity
+            float impactSeverity = Mathf.Abs(currentVelocity.y) / maxLandingVelocity;
+            impactSeverity = Mathf.Clamp01(impactSeverity); // Ensure it's between 0 and 1
+            
+            // Apply damping - reduce vertical velocity more for harder impacts
+            float dampingAmount = landingDampingFactor * impactSeverity;
+            currentVelocity.y *= (1f - dampingAmount);
+            
+            // Also reduce horizontal velocity slightly to simulate energy absorption
+            currentVelocity.x *= (1f - dampingAmount * 0.5f);
+            
+            // Apply the damped velocity
+            rb.linearVelocity = currentVelocity;
+            
+            Debug.Log($"Landing damped: Impact severity: {impactSeverity:F2}, Damping: {dampingAmount:F2}");
+        }
+    }
+
     private void HandleBoostPlayer()
     {
         if (isBoosting)
@@ -330,6 +362,10 @@ public class PlayerController : MonoBehaviour
         if (other.collider.CompareTag("Ground"))
         {
             isGrounded = true;
+            
+            // Apply landing velocity damping to reduce bounce
+            DampLandingVelocity();
+            
             // Check if we have a buffered jump
             if (bufferJump)
             {
