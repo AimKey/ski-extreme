@@ -67,6 +67,13 @@ public class TerrainManager : MonoBehaviour
         //chunk = Instantiate(terrainChunkStartPrefab, pos, transform.rotation, transform);
         chunk.GetComponent<TerrainChunk>().Init(pos, Random.Range(0f, 1000f), _currentChunkIndex);
         _activeChunks.Add(chunk);
+        
+        // Apply current speed to the new chunk
+        var surfaceEffector2D = chunk.GetComponent<SurfaceEffector2D>();
+        if (surfaceEffector2D != null)
+        {
+            surfaceEffector2D.speed = currentSpeed;
+        }
 
         RemoveOldChunks();
     }
@@ -83,22 +90,23 @@ public class TerrainManager : MonoBehaviour
 
     public void SetSurfaceSpeed(float speed)
     {
-        // Get the surface effector of the current chunk
-        GameObject obj = _activeChunks[_currentChunkIndex];
-        if (obj != null)
+        // Apply speed to all active chunks to ensure consistent behavior
+        currentSpeed = speed;
+        foreach (GameObject chunk in _activeChunks)
         {
-            var surfaceEffector2D = obj.GetComponent<SurfaceEffector2D>();
-            surfaceEffector2D.speed = speed;
+            if (chunk != null)
+            {
+                var surfaceEffector2D = chunk.GetComponent<SurfaceEffector2D>();
+                if (surfaceEffector2D != null)
+                {
+                    surfaceEffector2D.speed = speed;
+                }
+            }
         }
     }
 
     public void ResetSurfaceSpeed()
     {
-        GameObject obj = _activeChunks[_currentChunkIndex];
-        if (obj != null)
-        {
-            var surfaceEffector2D = obj.GetComponent<SurfaceEffector2D>();
-            surfaceEffector2D.speed = baseSpeed;
-        }
+        SetSurfaceSpeed(baseSpeed);
     }
 }

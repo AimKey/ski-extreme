@@ -132,8 +132,8 @@ public class PlayerController : MonoBehaviour
 
     private void HandlePlayerRotation()
     {
-        // If on the ground don't allow rotation
-        if (isGrounded)
+        // If on the ground don't allow rotation, or if player is dead
+        if (isGrounded || IsPlayerLost)
         {
             return;
         }
@@ -210,10 +210,24 @@ public class PlayerController : MonoBehaviour
     // Method to trigger boost mode with custom duration
     public void TriggerBoostMode(float duration)
     {
-        isBoosting = true;
-        boostTimer = duration;
-        speedBoostParticlePrefab.Play();
-        Debug.Log($"Boost mode activated for {duration} seconds!");
+        // Handle boost stacking: extend duration if already boosting
+        if (isBoosting)
+        {
+            // Extend boost duration instead of replacing it
+            boostTimer = Mathf.Max(boostTimer, duration);
+            Debug.Log($"Boost extended! New duration: {boostTimer:F1} seconds");
+        }
+        else
+        {
+            // Start new boost
+            isBoosting = true;
+            boostTimer = duration;
+            if (speedBoostParticlePrefab != null)
+            {
+                speedBoostParticlePrefab.Play();
+            }
+            Debug.Log($"Boost mode activated for {duration} seconds!");
+        }
     }
 
     // Method to trigger magnetic mode with custom duration
@@ -232,8 +246,33 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Permanent magnetic mode activated for debugging!");
     }
 
+    // Method to safely stop boost mode (can be called from other systems)
+    public void StopBoostMode(string reason = "")
+    {
+        if (isBoosting)
+        {
+            isBoosting = false;
+            if (speedBoostParticlePrefab != null)
+            {
+                speedBoostParticlePrefab.Stop();
+            }
+            if (terrainManager != null)
+            {
+                terrainManager.SetSurfaceSpeed(terrainManager.baseSpeed);
+            }
+            Debug.Log($"Boost mode stopped{(string.IsNullOrEmpty(reason) ? "" : $": {reason}")}");
+        }
+    }
+
     private void HandleMagneticMode()
     {
+        // Don't process magnetic mode if player is dead
+        if (IsPlayerLost)
+        {
+            isMagneticMode = false;
+            return;
+        }
+        
         if (isMagneticMode)
         {
             magneticTimer -= Time.fixedDeltaTime;
@@ -316,31 +355,51 @@ public class PlayerController : MonoBehaviour
 
     private void HandleBoostPlayer()
     {
+        // Don't process boost mode if player is dead
+        if (IsPlayerLost)
+        {
+            isBoosting = false;
+            return;
+        }
+        
         if (isBoosting)
         {
             boostTimer -= Time.fixedDeltaTime;
             if (boostTimer <= 0)
             {
                 isBoosting = false;
-                boostTimer = boostDuration;
+                // Don't reset boostTimer here - it will be set when boost is triggered again
                 speedBoostParticlePrefab.Stop();
                 
-                // Reset speed to default when boost ends
-                terrainManager.SetSurfaceSpeed(terrainManager.baseSpeed);
+                // Reset speed to default when boost ends with null check
+                if (terrainManager != null)
+                {
+                    terrainManager.SetSurfaceSpeed(terrainManager.baseSpeed);
+                }
                 Debug.Log("Boost ended, speed reset to default");
                 return;
             }
 
-            // Boosting stage - apply speed boost
-            float t = 1f - (boostTimer / boostDuration);
+            // Boosting stage - apply speed boost with null checks
+            if (terrainManager != null)
+            {
+                float t = 1f - (boostTimer / boostDuration);
 
-            // Explanation:
-            // 1f is the base speed
-            // Ex: base speed: 1f, boostMultiplier: 2f => The additional speed is 1f
-            // So we want to manipulate the additional speed, not the boost multiplier itself
-            float multiplier = 1f + boostCurve.Evaluate(t) * (boostMultiplier - 1f);
+                // Safe curve evaluation with fallback
+                float curveValue = 1f; // Default fallback
+                if (boostCurve != null)
+                {
+                    curveValue = boostCurve.Evaluate(t);
+                }
 
-            terrainManager.SetSurfaceSpeed(terrainManager.baseSpeed * multiplier);
+                // Explanation:
+                // 1f is the base speed
+                // Ex: base speed: 1f, boostMultiplier: 2f => The additional speed is 1f
+                // So we want to manipulate the additional speed, not the boost multiplier itself
+                float multiplier = 1f + curveValue * (boostMultiplier - 1f);
+
+                terrainManager.SetSurfaceSpeed(terrainManager.baseSpeed * multiplier);
+            }
         }
     }
 
@@ -414,8 +473,14 @@ public class PlayerController : MonoBehaviour
             if (isBoosting)
             {
                 isBoosting = false;
-                speedBoostParticlePrefab.Stop();
-                terrainManager.SetSurfaceSpeed(terrainManager.baseSpeed);
+                if (speedBoostParticlePrefab != null)
+                {
+                    speedBoostParticlePrefab.Stop();
+                }
+                if (terrainManager != null)
+                {
+                    terrainManager.SetSurfaceSpeed(terrainManager.baseSpeed);
+                }
                 Debug.Log("Boost mode stopped due to head collision!");
             }
             
@@ -448,17 +513,44 @@ public class PlayerController : MonoBehaviour
     public void PlayerGameOver()
     {
         IsPlayerLost = true;
+        
+        // Stop all active modes and clear buffers
+        isBoosting = false;
+        isMagneticMode = false;
+        bufferJump = false; // Clear any buffered jump
+        
         //rb.simulated = false;
-        terrainManager.SetSurfaceSpeed(0);
-        speedBoostParticlePrefab.Stop();
-        Instantiate(deadParticlePrefab, transform.position, Quaternion.identity);
-        audioSource.PlayOneShot(crashSound);
-        animator.SetBool("IsDead", true);
+        if (terrainManager != null)
+        {
+            terrainManager.SetSurfaceSpeed(0);
+        }
+        if (speedBoostParticlePrefab != null)
+        {
+            speedBoostParticlePrefab.Stop();
+        }
+        if (deadParticlePrefab != null)
+        {
+            Instantiate(deadParticlePrefab, transform.position, Quaternion.identity);
+        }
+        if (audioSource != null && crashSound != null)
+        {
+            audioSource.PlayOneShot(crashSound);
+        }
+        if (animator != null)
+        {
+            animator.SetBool("IsDead", true);
+        }
         //GameManager.Instance.PlayerLost();
     }
 
     public void Jump()
     {
+        // Don't allow jumping if player is dead
+        if (IsPlayerLost)
+        {
+            return;
+        }
+        
         if ((isGrounded))
         {
             Vector2 jumpVector = Vector2.up + Vector2.right * 0.5f; // Small forward push
