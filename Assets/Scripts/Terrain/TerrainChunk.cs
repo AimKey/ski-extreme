@@ -40,6 +40,7 @@ public class TerrainChunk : MonoBehaviour
 
     [Tooltip("The amount of terrain that will be dropped when the player lands on this chunk. This is used to create a smooth transition between chunks.")]
     public float CulmulativeDropAmount = 50f;
+    public float CulmulativeDropStartAmount = 100f;
     private int _currentChunkIndex;
 
     // Calculated properties
@@ -134,7 +135,6 @@ public class TerrainChunk : MonoBehaviour
 
             //skeleton.ConvertExistingSplineIntoSkeleton(initShape);
 
-            float cumulativeDrop = 100f;
             var isOnFlat = false;
             // Start from the last point in the skeleton
             for (int i = 0; i < NumOfPoints; i++)
@@ -148,9 +148,9 @@ public class TerrainChunk : MonoBehaviour
                 if (Random.value < 0.5f)
                     isOnFlat = !isOnFlat;
                 if (!isOnFlat)
-                    cumulativeDrop += CulmulativeDropAmount;
+                    CulmulativeDropStartAmount += CulmulativeDropAmount;
 
-                var newPos = new Vector3(posX, posY - cumulativeDrop, 0);
+                var newPos = new Vector3(posX, posY - CulmulativeDropStartAmount, 0);
 
                 TerrainPoint newPoint = new()
                 {
@@ -171,7 +171,7 @@ public class TerrainChunk : MonoBehaviour
                     generator.AppendStructureFromSplineToSkeletonRNG(skeleton, terrainStructurePrefab, 1f, gameObject);
                     generator.InitDecorationsFromPrefab(spawnPos, terrainStructurePrefab, gameObject);
                     float height = generator.GetStructurePrefabHeight(terrainStructurePrefab);
-                    cumulativeDrop += height;
+                    CulmulativeDropStartAmount += height;
                     Debug.Log($"[TerrainChunk] Terrain height: {height}");
                 }
             }

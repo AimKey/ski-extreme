@@ -57,6 +57,10 @@ public class PlayerController : MonoBehaviour
     // Camera zoom effect
     private CameraZoomEffect cameraZoomEffect;
 
+    [Header("Player Animation")]
+    // Player animation
+    public Animator animator;
+
 
     private void Awake()
     {
@@ -245,17 +249,19 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Ground"))
         {
             Debug.Log("Ouch, my head");
-            //PlayerGameOver();
+            PlayerGameOver();
         }
     }
 
     public void PlayerGameOver()
     {
         IsPlayerLost = true;
-        rb.simulated = false;
+        //rb.simulated = false;
+        terrainManager.SetSurfaceSpeed(0);
         speedBoostParticlePrefab.Stop();
         Instantiate(deadParticlePrefab, transform.position, Quaternion.identity);
         audioSource.PlayOneShot(crashSound);
+        animator.SetBool("IsDead", true);
         //GameManager.Instance.PlayerLost();
     }
 

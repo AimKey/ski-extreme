@@ -21,6 +21,7 @@ public class RockObstacleController : MonoBehaviour
     // Use to allow player to ramp through the rock
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log($"RockObstacleController: OnTriggerEnter2D called with {other.name} at position {other.transform.position}");
         if (other.CompareTag("Player"))
         {
             // Prevent multiple triggers from destroying the rock
@@ -42,7 +43,7 @@ public class RockObstacleController : MonoBehaviour
             else if (other.IsTouching(destroyCollider))
             {
                 Debug.Log("Player is touching the destroy collider, triggering game over.");
-                //playerController.PlayerGameOver();
+                playerController.PlayerGameOver();
             }
         }
     }
