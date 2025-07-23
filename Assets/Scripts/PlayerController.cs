@@ -117,12 +117,26 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        // Apply rotation based on input
-        float rotationInput = rotateLeftAction.ReadValue<float>() - rotateRightAction.ReadValue<float>();
         float rotationAmount = 0f;
-        if (rotationInput != 0f)
+
+        // Check for space key input (counter-clockwise rotation)
+        if (Input.GetKey(KeyCode.Space))
         {
-            rotationAmount = rotationInput * rotationSpeed * Time.deltaTime;
+            rotationAmount = -rotationSpeed * Time.deltaTime; // Negative for counter-clockwise
+        }
+        else
+        {
+            // Apply rotation based on left/right input when not holding space
+            float rotationInput = rotateLeftAction.ReadValue<float>() - rotateRightAction.ReadValue<float>();
+            if (rotationInput != 0f)
+            {
+                rotationAmount = rotationInput * rotationSpeed * Time.deltaTime;
+            }
+        }
+
+        // Apply the rotation
+        if (rotationAmount != 0f)
+        {
             rb.MoveRotation(rb.rotation + rotationAmount);
         }
 
