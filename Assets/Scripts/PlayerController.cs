@@ -296,6 +296,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Ouch, my head");
             PlayerGameOver();
         }
+        else if (other.CompareTag("PowerUp"))
+        {
+            Debug.Log("Power-up collected! Boost mode activated for 8 seconds.");
+            TriggerBoostMode(8f); // 8 second boost duration
+            
+            // Destroy or disable the power-up after collection
+            Destroy(other.gameObject);
+        }
     }
 
     public void PlayerGameOver()
