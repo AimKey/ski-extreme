@@ -48,7 +48,7 @@ public class TerrainSprinker : MonoBehaviour
         try
         {
             var spline = ssc.spline;
-            for (int i = 4; i < spline.GetPointCount() - 2; i++)
+            for (int i = 8; i < spline.GetPointCount() - 2; i++)
             {
                 // Convert to world space
                 Vector3 prevPoint = ssc.transform.TransformPoint(spline.GetPosition(i - 1));
@@ -106,7 +106,7 @@ public class TerrainSprinker : MonoBehaviour
                     PlaceCoinRow(prevPoint, currentPoint, dynamicParentContainer);
                     isCoinSpawned = true;
                 }
-                if (!isCoinSpawned && Random.value < powerUpChance)
+                if (!isCoinSpawned && Random.value < powerUpChance && i >= 10)
                 {
                     PlacePowerup(prevPoint, currentPoint, dynamicParentContainer);
                 }

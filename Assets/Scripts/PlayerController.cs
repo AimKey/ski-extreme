@@ -1,5 +1,6 @@
 using Assets.Scripts.Constants;
 using System;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour
 
     // Sound clips
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource surfaceAudioSource;
     [SerializeField] private AudioClip crashSound;
     [SerializeField] private AudioClip trickPerformedSound;
 
@@ -56,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
     // Camera zoom effect
     private CameraZoomEffect cameraZoomEffect;
+    [SerializeField] private CinemachineImpulseSource CinemachineImpulseSource;
 
     [Header("Player Animation")]
     // Player animation
@@ -83,11 +86,12 @@ public class PlayerController : MonoBehaviour
         rotateRightAction.Enable();
         rotateLeftAction.Enable();
         terrainManager = TerrainManager.Instance;
-        // Init sound
-        audioSource = GetComponent<AudioSource>();
+        // Init sound (From editor)
 
         // Init camera zoom effect
         cameraZoomEffect = CameraZoomEffect.Instance;
+
+        CinemachineImpulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
     // Update is called once per frame
@@ -231,6 +235,7 @@ public class PlayerController : MonoBehaviour
 
             surfaceNormal = other.contacts[0].normal;
             cameraZoomEffect.ResetZoom();
+            ToggleSurfingAudio(true);
         }
     }
 
@@ -257,6 +262,7 @@ public class PlayerController : MonoBehaviour
     {
         IsPlayerLost = true;
         //rb.simulated = false;
+        CinemachineImpulseSource.GenerateImpulse();
         terrainManager.SetSurfaceSpeed(0);
         speedBoostParticlePrefab.Stop();
         Instantiate(deadParticlePrefab, transform.position, Quaternion.identity);
@@ -272,6 +278,7 @@ public class PlayerController : MonoBehaviour
             Vector2 jumpVector = Vector2.up + Vector2.right * 0.5f; // Small forward push
             rb.AddForce(jumpVector * jumpForce, ForceMode2D.Impulse);
             cameraZoomEffect?.ZoomOut();
+            ToggleSurfingAudio(false);
         }
         else
         {
@@ -282,5 +289,16 @@ public class PlayerController : MonoBehaviour
     public void ToggleMainMenu()
     {
         GameManager.Instance.PauseGame();
+    }
+
+    public void ToggleSurfingAudio(bool play)
+    {
+        if (play)
+        {
+            if (surfaceAudioSource.isPlaying) return;
+            surfaceAudioSource.Play();
+        }
+        else
+            surfaceAudioSource.Pause();
     }
 }

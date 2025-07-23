@@ -133,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1017777425645801019, guid: 67be07bbc7563d047a43dd809fea2a3f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 863.5654
+      value: 933.6844
       objectReference: {fileID: 0}
     - target: {fileID: 1017777425645801019, guid: 67be07bbc7563d047a43dd809fea2a3f, type: 3}
       propertyPath: m_SizeDelta.y
@@ -141,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1017777425645801019, guid: 67be07bbc7563d047a43dd809fea2a3f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 52
+      value: 87.05957
       objectReference: {fileID: 0}
     - target: {fileID: 1017777425645801019, guid: 67be07bbc7563d047a43dd809fea2a3f, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -334,6 +334,10 @@ PrefabInstance:
     - target: {fileID: 4956311154506799618, guid: 67be07bbc7563d047a43dd809fea2a3f, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5375944925344695381, guid: 67be07bbc7563d047a43dd809fea2a3f, type: 3}
+      propertyPath: m_text
+      value: Barry Adventure
       objectReference: {fileID: 0}
     - target: {fileID: 5375944925344695381, guid: 67be07bbc7563d047a43dd809fea2a3f, type: 3}
       propertyPath: m_fontSize
