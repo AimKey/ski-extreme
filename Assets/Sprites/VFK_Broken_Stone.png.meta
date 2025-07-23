@@ -1,0 +1,351 @@
+fileFormatVersion: 2
+guid: 8d5352ed26199964085e1759ed836830
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5127389600236175641
+    second: 360_F_843935225_8E8Q31XHzzrGrxFZDX5JH6JrSZ1dkkpj-removebg-preview_0
+  - first:
+      213: 3115222142016364072
+    second: 360_F_843935225_8E8Q31XHzzrGrxFZDX5JH6JrSZ1dkkpj-removebg-preview_1
+  - first:
+      213: -244754619230201737
+    second: 360_F_843935225_8E8Q31XHzzrGrxFZDX5JH6JrSZ1dkkpj-removebg-preview_2
+  - first:
+      213: 5660419781157351030
+    second: 360_F_843935225_8E8Q31XHzzrGrxFZDX5JH6JrSZ1dkkpj-removebg-preview_3
+  - first:
+      213: 2403401251412250775
+    second: 360_F_843935225_8E8Q31XHzzrGrxFZDX5JH6JrSZ1dkkpj-removebg-preview_4
+  - first:
+      213: -2044397229966904975
+    second: 360_F_843935225_8E8Q31XHzzrGrxFZDX5JH6JrSZ1dkkpj-removebg-preview_5
+  - first:
+      213: 864045058426259558
+    second: 360_F_843935225_8E8Q31XHzzrGrxFZDX5JH6JrSZ1dkkpj-removebg-preview_6
+  - first:
+      213: -393694020831926222
+    second: 360_F_843935225_8E8Q31XHzzrGrxFZDX5JH6JrSZ1dkkpj-removebg-preview_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 707
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: VFK_Broken_Stone_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 202
+        width: 160
+        height: 126
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb5c254fc3f4db9489ed72aaaecf0213
+      internalID: -621563230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFK_Broken_Stone_1
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 201
+        width: 158
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b24b3ec5ede3014a877fd7da89b5202
+      internalID: -499077871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFK_Broken_Stone_2
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 192
+        width: 158
+        height: 146
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e47c6d7b996319a4fa772ede1aab365b
+      internalID: 1864348093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFK_Broken_Stone_3
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 194
+        width: 157
+        height: 141
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef63a979258178a40b0e2941eb820ccc
+      internalID: 1795477306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFK_Broken_Stone_4
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 22
+        width: 158
+        height: 134
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc9ceeaa5fb02c94db95261c0ba655c8
+      internalID: 1395432407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFK_Broken_Stone_5
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 29
+        width: 157
+        height: 121
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8f4f48222be790429fc7decca88e959
+      internalID: 1096005205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFK_Broken_Stone_6
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 40
+        width: 146
+        height: 106
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 574ddcef660e1c144bbe5d1a8d1c2020
+      internalID: 1428854475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFK_Broken_Stone_7
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 18
+        width: 162
+        height: 141
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d08041c2a4ce760499977b37b12916b8
+      internalID: 1308224669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      VFK_Broken_Stone_0: -621563230
+      VFK_Broken_Stone_1: -499077871
+      VFK_Broken_Stone_2: 1864348093
+      VFK_Broken_Stone_3: 1795477306
+      VFK_Broken_Stone_4: 1395432407
+      VFK_Broken_Stone_5: 1096005205
+      VFK_Broken_Stone_6: 1428854475
+      VFK_Broken_Stone_7: 1308224669
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

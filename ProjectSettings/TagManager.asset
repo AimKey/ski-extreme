@@ -2,18 +2,25 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - Item
+  - Ground
+  - DecorMarker
+  - Rock
+  - Magnet
+  - Shield
+  - Coin
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Rock
+  - Player
+  - Powerup
   - 
   - 
   - 
@@ -41,3 +48,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 1738924759
+    locked: 0
+  - name: Decoration
+    uniqueID: 4105129527
+    locked: 0
+  - name: Terrain
+    uniqueID: 1890606651
+    locked: 0
+  - name: Player
+    uniqueID: 3136324125
+    locked: 0
+  - name: UI
+    uniqueID: 4159045385
+    locked: 0
+  m_RenderingLayers:
+  - Default
