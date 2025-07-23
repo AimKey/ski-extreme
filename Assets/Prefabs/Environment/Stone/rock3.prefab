@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 860770801116979448}
   - component: {fileID: 106081602416380160}
-  - component: {fileID: 6791773582145707462}
+  - component: {fileID: 8128312623496048755}
+  - component: {fileID: 7059771141345143059}
   m_Layer: 0
   m_Name: rock3
   m_TagString: Rock
@@ -88,8 +89,54 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!60 &6791773582145707462
-PolygonCollider2D:
+--- !u!61 &8128312623496048755
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5205051703530151526}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 23888a52045cb3e43b83f2cf2fb6207d, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.2751224}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.51, y: 0.38}
+    newSize: {x: 0.51, y: 0.38}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.51, y: 0.19710384}
+  m_EdgeRadius: 0
+--- !u!61 &7059771141345143059
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -118,11 +165,11 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.08049996}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -132,15 +179,5 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.123597555, y: 0.27931917}
-      - {x: -0.18540652, y: 0.1947053}
-      - {x: -0.21889229, y: 0.1300407}
-      - {x: -0.2588008, y: 0.0019411296}
-      - {x: 0.2607012, y: 0.000040709972}
-      - {x: 0.255, y: 0.06}
-      - {x: 0.19098344, y: 0.13561691}
-      - {x: 0.15644178, y: 0.29630747}
-      - {x: 0.073780455, y: 0.38194114}
-  m_UseDelaunayMesh: 0
+  m_Size: {x: 0.51, y: 0.15946308}
+  m_EdgeRadius: 0

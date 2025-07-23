@@ -37,6 +37,9 @@ public class TerrainChunk : MonoBehaviour
     [SerializeField] private float smoothAmount = 5f;
 
     public float DistanceUntilNextChunk = -1;
+
+    [Tooltip("The amount of terrain that will be dropped when the player lands on this chunk. This is used to create a smooth transition between chunks.")]
+    public float CulmulativeDropAmount = 50f;
     private int _currentChunkIndex;
 
     // Calculated properties
@@ -131,7 +134,7 @@ public class TerrainChunk : MonoBehaviour
 
             //skeleton.ConvertExistingSplineIntoSkeleton(initShape);
 
-            float cumulativeDrop = 10f;
+            float cumulativeDrop = 100f;
             var isOnFlat = false;
             // Start from the last point in the skeleton
             for (int i = 0; i < NumOfPoints; i++)
@@ -140,12 +143,12 @@ public class TerrainChunk : MonoBehaviour
                 var posX = lastPoint.Position.x + DistanceBetweenPoints;
 
                 float baseNoise = Mathf.PerlinNoise(posX * NoiseScale, _perlinSeed);
-                float posY = (1f - baseNoise) * terrainHeightScale - 100f;
+                float posY = (1f - baseNoise) * terrainHeightScale;
 
                 if (Random.value < 0.5f)
                     isOnFlat = !isOnFlat;
                 if (!isOnFlat)
-                    cumulativeDrop += 50f;
+                    cumulativeDrop += CulmulativeDropAmount;
 
                 var newPos = new Vector3(posX, posY - cumulativeDrop, 0);
 

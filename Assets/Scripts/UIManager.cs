@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     public void ShowPauseMenu() => SwitchMenu(pauseMenu);
     public void ShowGameOverMenu() => SwitchMenu(gameOverMenu);
     public void ShowShopMenu() => SwitchMenu(shopMenu);
+    public void ShowHUD() => SwitchMenu(hudGame);
 
     public void OpenSettings(bool fromPause)
     {

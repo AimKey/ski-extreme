@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 5388679892826440973}
   - component: {fileID: 7392313581945657329}
   - component: {fileID: 7668410920483240079}
-  - component: {fileID: 6855401804567701952}
+  - component: {fileID: 4096109272913932237}
+  - component: {fileID: 2236601458318778078}
   m_Layer: 0
   m_Name: Rock
   m_TagString: Rock
@@ -101,8 +102,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c199bf3007942d24182c315dd5767587, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!60 &6855401804567701952
-PolygonCollider2D:
+--- !u!61 &4096109272913932237
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653990980046589901}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 23888a52045cb3e43b83f2cf2fb6207d, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.009123772, y: 0.9552907}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1.76, y: 1.24}
+    newSize: {x: 1.76, y: 1.24}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.7508764, y: 0.56941867}
+  m_EdgeRadius: 0
+--- !u!61 &2236601458318778078
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -131,11 +178,11 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.31892264}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -145,25 +192,5 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.64, y: 0.42999998}
-      - {x: 0.48999998, y: 0.66999996}
-      - {x: 0.42999998, y: 0.85999995}
-      - {x: 0.26, y: 1.15}
-      - {x: 0.12, y: 1.24}
-      - {x: -0.04, y: 1.24}
-      - {x: -0.13, y: 1.1999999}
-      - {x: -0.34, y: 1.01}
-      - {x: -0.51, y: 0.76}
-      - {x: -0.53, y: 0.51}
-      - {x: -0.59999996, y: 0.41}
-      - {x: -0.68, y: 0.26}
-      - {x: -0.75, y: 0.26999998}
-      - {x: -0.87, y: 0.12}
-      - {x: -0.88, y: 0.07}
-      - {x: -0.88, y: 0}
-      - {x: 0.88, y: 0}
-      - {x: 0.88, y: 0.07}
-      - {x: 0.64, y: 0.35999998}
-  m_UseDelaunayMesh: 0
+  m_Size: {x: 1.76, y: 0.6378453}
+  m_EdgeRadius: 0

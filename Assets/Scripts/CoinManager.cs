@@ -9,6 +9,7 @@ public class CoinManager : MonoBehaviour
 
     private int totalCoins = 0;
 
+
     void Awake()
     {
         if (Instance == null)

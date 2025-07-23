@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject WinMenu;
     [SerializeField] private TextMeshProUGUI finalScoreText;
 
+    private UIManager UIManager;
+
     public static GameManager Instance { get; set; }
 
     private void Awake()
@@ -34,6 +36,8 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
+        UIManager = UIManager.Instance;
+        UIManager.ShowHUD();
         // Initialize the player score
         PlayerScore = 0;
         Time.timeScale = 1f;

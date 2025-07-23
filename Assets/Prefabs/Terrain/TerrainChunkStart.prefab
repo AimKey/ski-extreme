@@ -277,11 +277,12 @@ MonoBehaviour:
   terrainTail: {fileID: 5195508933389838801, guid: 37768b3f4598fc84988482efebc63cd6, type: 3}
   terrainHead: {fileID: 5880095709287386730, guid: 3735872932b6ad84893507c96c8a29f5, type: 3}
   terrainHeightScale: 70
-  NumOfPoints: 25
+  NumOfPoints: 10
   DistanceBetweenPoints: 90
-  NoiseScale: 0.8
+  NoiseScale: 0.6
   smoothAmount: 30
-  DistanceUntilNextChunk: 60
+  DistanceUntilNextChunk: 30
+  CulmulativeDropAmount: 50
   startingPos: {x: 0, y: 0, z: 0}
 --- !u!114 &8080256021809457815
 MonoBehaviour:
@@ -296,7 +297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   surfaceEffector: {fileID: 6535758110153711377}
-  baseSpeed: 50
+  baseSpeed: 40
 --- !u!252 &6535758110153711377
 SurfaceEffector2D:
   m_ObjectHideFlags: 0

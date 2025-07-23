@@ -2,7 +2,7 @@
 
 public class CollectibleCoin : MonoBehaviour
 {
-    public int scoreValue = 1;
+    public int coinValue = 1;
     public AudioClip collectSound;
     //public float lifetime = 10f;
 
@@ -16,7 +16,7 @@ public class CollectibleCoin : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Tăng điểm
-            //ScoreManager.Instance.AddScore(scoreValue);
+            CoinManager.Instance.AddCoin(coinValue);
 
             // Âm thanh (nếu có)
             if (collectSound != null)

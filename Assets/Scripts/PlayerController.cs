@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
     // Camera zoom effect
     private CameraZoomEffect cameraZoomEffect;
 
+
     private void Awake()
     {
         if (Instance == null)
@@ -89,6 +90,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         DecreaseJumpBufferTime();
+
     }
 
     private void FixedUpdate()
@@ -100,10 +102,7 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyConstantForce()
     {
-        //if (isGrounded)
-        //{
-        //    rb.AddForce(-surfaceNormal * 300f, ForceMode2D.Force);
-        //}
+        //rb.AddForce(-surfaceNormal * 300f, ForceMode2D.Force);
     }
 
     private void HandlePlayerRotation()
@@ -264,8 +263,8 @@ public class PlayerController : MonoBehaviour
     {
         if ((isGrounded))
         {
-            Vector2 jumpVector = Vector2.up + Vector2.right * 0.1f; // Small forward push
-            rb.AddForce(jumpVector.normalized * jumpForce, ForceMode2D.Impulse);
+            Vector2 jumpVector = Vector2.up + Vector2.right * 0.5f; // Small forward push
+            rb.AddForce(jumpVector * jumpForce, ForceMode2D.Impulse);
             cameraZoomEffect?.ZoomOut();
         }
         else
