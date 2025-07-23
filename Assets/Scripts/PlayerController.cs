@@ -29,12 +29,18 @@ public class PlayerController : MonoBehaviour
 
     // Trick related variables
     private float RotatedDegree = 0;
+    
+    // 360 detection variables
+    [Header("360 Trick Settings")]
+    [SerializeField] private float rotation360Tolerance = 30f; // Tolerance for 360 detection (±30 degrees)
+    private float accumulated360Rotations = 0f; // Track accumulated rotations for 360 detection
 
     // Boost related variables
     [SerializeField] private float boostDuration = 2f;
     [SerializeField] private float boostMultiplier = 2f;
     [SerializeField] private AnimationCurve boostCurve; // ease-in-out curve
     private bool didFlip = false;
+    private bool did360 = false; // Track if player performed 360
     public bool isBoosting = false;
     private float boostTimer;
     private TerrainManager terrainManager;
@@ -101,7 +107,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         HandlePlayerRotation();
-        //HandleBoostPlayer();
+        HandleBoostPlayer();
         ApplyConstantForce();
     }
 
@@ -121,7 +127,7 @@ public class PlayerController : MonoBehaviour
         float rotationAmount = 0f;
 
         // Check for space key input (counter-clockwise rotation)
-        if (Input.GetKey(KeyCode.Space) && !GameManager.Instance.IsGamePaused && !IsPlayerLost)
+        if (Input.GetKey(KeyCode.Space))
         {
             rotationAmount = -rotationSpeed * Time.deltaTime; // Negative for counter-clockwise
         }
@@ -141,13 +147,27 @@ public class PlayerController : MonoBehaviour
             rb.MoveRotation(rb.rotation + rotationAmount);
         }
 
-        // // Handle player performing tricks related to rotations
-        // TrickHandler(rotationAmount);
+        // Handle player performing tricks related to rotations
+        TrickHandler(rotationAmount);
     }
 
     private void TrickHandler(float rotationAmount)
     {
         RotatedDegree += rotationAmount;
+        accumulated360Rotations += rotationAmount;
+
+        // Check for 360-degree rotation (with tolerance)
+        if (Mathf.Abs(accumulated360Rotations) >= (360f - rotation360Tolerance) && !isGrounded)
+        {
+            Debug.Log($"360 detected! Rotation: {accumulated360Rotations}");
+            // Mark that player performed 360, boost will activate on landing
+            did360 = true;
+            GameManager.Instance.IncreaseScoreFromPlayerTrick("360_Spin");
+            audioSource.PlayOneShot(trickPerformedSound);
+            accumulated360Rotations = 0f; // Reset 360 counter
+        }
+
+        // Check for regular flips (300 degrees)
         if (Math.Abs(RotatedDegree) >= 300 && !isGrounded)
         {
             if (RotatedDegree <= -300)
@@ -163,9 +183,18 @@ public class PlayerController : MonoBehaviour
                 audioSource.PlayOneShot(trickPerformedSound);
             }
 
-            // Reset
+            // Reset flip counter
             RotatedDegree = 0f;
         }
+    }
+
+    // Method to trigger boost mode with custom duration
+    public void TriggerBoostMode(float duration)
+    {
+        isBoosting = true;
+        boostTimer = duration;
+        speedBoostParticlePrefab.Play();
+        Debug.Log($"Boost mode activated for {duration} seconds!");
     }
 
     // Used by rock controller
@@ -184,9 +213,14 @@ public class PlayerController : MonoBehaviour
                 isBoosting = false;
                 boostTimer = boostDuration;
                 speedBoostParticlePrefab.Stop();
+                
+                // Reset speed to default when boost ends
+                terrainManager.SetSurfaceSpeed(terrainManager.baseSpeed);
+                Debug.Log("Boost ended, speed reset to default");
+                return;
             }
 
-            // Boosting stage
+            // Boosting stage - apply speed boost
             float t = 1f - (boostTimer / boostDuration);
 
             // Explanation:
@@ -196,10 +230,6 @@ public class PlayerController : MonoBehaviour
             float multiplier = 1f + boostCurve.Evaluate(t) * (boostMultiplier - 1f);
 
             terrainManager.SetSurfaceSpeed(terrainManager.baseSpeed * multiplier);
-        }
-        else
-        {
-            terrainManager.SetSurfaceSpeed(terrainManager.baseSpeed);
         }
     }
 
@@ -232,16 +262,16 @@ public class PlayerController : MonoBehaviour
             // Play the drifting particle effect that follow this player
             driftingParticlePrefab.Play();
 
-            // Reset the rotated degree
+            // Reset the rotation counters
             RotatedDegree = 0f;
+            accumulated360Rotations = 0f;
 
-            // Trigger boost if it is available
-            if (didFlip && !IsPlayerLost)
+            // Trigger boost if player performed tricks while airborne
+            if ((didFlip || did360) && !IsPlayerLost)
             {
-                isBoosting = true;
-                boostTimer = boostDuration;
+                TriggerBoostMode(boostDuration);
                 didFlip = false;
-                speedBoostParticlePrefab.Play();
+                did360 = false;
             }
 
             surfaceNormal = other.contacts[0].normal;

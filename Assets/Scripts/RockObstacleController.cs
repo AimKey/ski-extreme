@@ -33,12 +33,46 @@ public class RockObstacleController : MonoBehaviour
             {
                 PlayerController.Instance.RampingRockTrickHandler();
                 ShakeScreen();
-                breakRockAudioSource.Play();
-                Debug.Log("Player is boosting and hit the rock, destroying the rock.");
-				Instantiate(rockDestroyedVFX, transform.position, Quaternion.identity);
-                // Turn off the rock sprite renderer to hide the rock
-                GetComponent<SpriteRenderer>().enabled = false;
-                Destroy(gameObject, breakRockAudioSource.clip.length);
+                
+                // Play break sound if AudioSource exists
+                if (breakRockAudioSource != null)
+                {
+                    breakRockAudioSource.Play();
+                    Debug.Log("Player is boosting and hit the rock, destroying the rock.");
+                    
+                    // Spawn VFX if available
+                    if (rockDestroyedVFX != null)
+                    {
+                        Instantiate(rockDestroyedVFX, transform.position, Quaternion.identity);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("RockDestroyedVFX not assigned, skipping visual effect.");
+                    }
+                    
+                    // Turn off the rock sprite renderer to hide the rock
+                    GetComponent<SpriteRenderer>().enabled = false;
+                    Destroy(gameObject, breakRockAudioSource.clip.length);
+                }
+                else
+                {
+                    Debug.LogWarning("AudioSource not found on rock, destroying without sound.");
+                    Debug.Log("Player is boosting and hit the rock, destroying the rock.");
+                    
+                    // Spawn VFX if available
+                    if (rockDestroyedVFX != null)
+                    {
+                        Instantiate(rockDestroyedVFX, transform.position, Quaternion.identity);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("RockDestroyedVFX not assigned, skipping visual effect.");
+                    }
+                    
+                    // Turn off the rock sprite renderer to hide the rock
+                    GetComponent<SpriteRenderer>().enabled = false;
+                    Destroy(gameObject, 1f); // Use default 1 second delay
+                }
             }
             else if (other.IsTouching(destroyCollider))
             {
