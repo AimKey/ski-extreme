@@ -373,6 +373,16 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Ground"))
         {
             Debug.Log("Ouch, my head");
+            
+            // Stop boost mode immediately if player hits head while boosting
+            if (isBoosting)
+            {
+                isBoosting = false;
+                speedBoostParticlePrefab.Stop();
+                terrainManager.SetSurfaceSpeed(terrainManager.baseSpeed);
+                Debug.Log("Boost mode stopped due to head collision!");
+            }
+            
             PlayerGameOver();
         }
         // else if (other.CompareTag("PowerUp"))
