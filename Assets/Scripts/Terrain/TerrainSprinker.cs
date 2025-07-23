@@ -16,12 +16,16 @@ public class TerrainSprinker : MonoBehaviour
     private string previousDecorTag;
 
     [Header("Coin Settings")]
-    public GameObject coinPrefab;
+    [SerializeField] private GameObject coinPrefab;
     public int minCoinCount = 3;
     public int maxCoinCount = 6;
     public float coinSpawningChance = 0.2f;
     public float coinSpacing = 1f;
     public static TerrainSprinker Instance { get; private set; }
+    [Header("Power up Settings")]
+    [SerializeField] private List<GameObject> powerUpPrefab;
+    public float powerUpChance = 0.1f; // 10% chance to spawn a power-up
+
     private void Awake()
     {
         if (Instance == null)
@@ -95,18 +99,53 @@ public class TerrainSprinker : MonoBehaviour
                     }
                 }
 
+                bool isCoinSpawned = false;
                 // Place coins with a chance
                 if (Random.value < coinSpawningChance)
                 {
                     PlaceCoinRow(prevPoint, currentPoint, dynamicParentContainer);
+                    isCoinSpawned = true;
+                }
+                if (!isCoinSpawned && Random.value < powerUpChance)
+                {
+                    PlacePowerup(prevPoint, currentPoint, dynamicParentContainer);
                 }
             }
-
         }
         catch (Exception e)
         {
             Debug.Log($"[TerrainSprinker] Error placing decorations: {e.Message}");
         }
+    }
+
+    private GameObject GetRandomPowerupPrefab()
+    {
+        if (powerUpPrefab == null || powerUpPrefab.Count == 0)
+        {
+            Debug.LogWarning("[TerrainSprinker] No power-up prefabs available.");
+            return null;
+        }
+        int randomIndex = Random.Range(0, powerUpPrefab.Count);
+        return powerUpPrefab[randomIndex];
+    }
+
+    private void PlacePowerup(Vector3 prevPoint, Vector3 currentPoint, GameObject dynamicParentContainer)
+    {
+        var powerupPrefab = GetRandomPowerupPrefab();
+        if (powerupPrefab == null)
+        {
+            Debug.LogWarning($"[TerrainSprinker] No power-up prefab found to place.");
+        }
+        float t = Random.Range(0.2f, 0.8f);
+        Vector3 spawnPos = Vector3.Lerp(prevPoint, currentPoint, t);
+        var (y, normal) = GetYPlacementRaycast(spawnPos);
+        spawnPos.y = y;
+        Quaternion rotation = Quaternion.identity;
+        var fullRotation = Quaternion.FromToRotation(Vector3.up, normal);
+        rotation = Quaternion.Slerp(Quaternion.identity, fullRotation, 0.8f); // Half rotation
+
+        // Instantiate the power-up prefab
+        var spawnedPowerup = PlaceDecoration(spawnPos, dynamicParentContainer, powerupPrefab, rotation);
     }
 
     public Vector3 GetRandomXPlacement(Vector3 prevPoint, Vector3 currentPoint, Vector2 previousDecorationPos)

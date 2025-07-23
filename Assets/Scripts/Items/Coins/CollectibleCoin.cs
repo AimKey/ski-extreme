@@ -4,7 +4,7 @@ public class CollectibleCoin : MonoBehaviour
 {
     public int coinValue = 1;
     public AudioClip collectSound;
-    //public float lifetime = 10f;
+    public GameObject CoinPickupVFX;
 
     private void Start()
     {
@@ -21,6 +21,8 @@ public class CollectibleCoin : MonoBehaviour
             // Âm thanh (nếu có)
             if (collectSound != null)
                 AudioSource.PlayClipAtPoint(collectSound, transform.position);
+            // Init the p
+            GameObject.Instantiate(CoinPickupVFX, transform.position, Quaternion.identity);
 
             Destroy(gameObject);
         }

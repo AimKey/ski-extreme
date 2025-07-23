@@ -262,7 +262,7 @@ public class PlayerController : MonoBehaviour
         Instantiate(deadParticlePrefab, transform.position, Quaternion.identity);
         audioSource.PlayOneShot(crashSound);
         animator.SetBool("IsDead", true);
-        //GameManager.Instance.PlayerLost();
+        GameManager.Instance.PlayerLost();
     }
 
     public void Jump()

@@ -1,5 +1,6 @@
 using Assets.Scripts.Constants;
 using Assets.Scripts.Models;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -84,7 +85,14 @@ public class GameManager : MonoBehaviour
     public void PlayerLost()
     {
         Debug.Log("Player lost the game.");
-        GameOverMenu.SetActive(true);
+        // Wait for 1 seconds before showing the game over menu
+        StartCoroutine(ShowGameOverMenuAfterDelay(1f));
+    }
+
+    private IEnumerator ShowGameOverMenuAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        UIManager.Instance.ShowGameOverMenu();
     }
 
     // Method when player pause the game
@@ -94,13 +102,15 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 1f;
             IsGamePaused = false;
-            PauseMenu.SetActive(false);
+            //PauseMenu.SetActive(false);
+            UIManager.Instance.ShowHUD(); // Show HUD when unpausing
         }
         else
         {
             Time.timeScale = 0f;
             IsGamePaused = true;
-            PauseMenu.SetActive(true);
+            //PauseMenu.SetActive(true);
+            UIManager.Instance.ShowPauseMenu(); // Show pause menu
         }
     }
     

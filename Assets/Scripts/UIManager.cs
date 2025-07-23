@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     public void ShowStartMenu() => SwitchMenu(startMenu);

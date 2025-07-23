@@ -34,7 +34,7 @@ public class GameOverMenu : MonoBehaviour
 
     public void OnHomeButton()
     {
-        SceneManager.LoadScene("UIMenu"); 
+        SceneManager.LoadScene("StartMenu"); 
     }
 
     public void OnPlayAgainButton()

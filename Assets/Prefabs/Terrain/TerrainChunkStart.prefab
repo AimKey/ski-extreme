@@ -283,7 +283,7 @@ MonoBehaviour:
   smoothAmount: 30
   DistanceUntilNextChunk: 30
   CulmulativeDropAmount: 50
-  CulmulativeDropStartAmount: 200
+  CulmulativeDropStartAmount: 100
   startingPos: {x: 0, y: 0, z: 0}
 --- !u!114 &8080256021809457815
 MonoBehaviour:
