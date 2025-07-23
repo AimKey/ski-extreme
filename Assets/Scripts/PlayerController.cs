@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
     // Boost related variables
     [SerializeField] private float boostDuration = 2f;
-    [SerializeField] private float boostMultiplier = 1.5f;
+    [SerializeField] private float boostMultiplier = 1.25f;
     [SerializeField] private AnimationCurve boostCurve; // ease-in-out curve
     private bool didFlip = false;
     private bool did360 = false; // Track if player performed 360
@@ -83,7 +83,8 @@ public class PlayerController : MonoBehaviour
     [Header("Player Animation")]
     // Player animation
     public Animator animator;
-
+    // Effect animation
+    [SerializeField] private ParticleSystem powerUpEffect;
 
     private void Awake()
     {
@@ -494,28 +495,30 @@ public class PlayerController : MonoBehaviour
             
             PlayerGameOver();
         }
-        // else if (other.CompareTag("PowerUp"))
-        // {
-        //     Debug.Log("Power-up collected! Boost mode activated for 8 seconds.");
-        //     TriggerBoostMode(8f); // 8 second boost duration
+        else if (other.CompareTag("Shield"))
+        {
+            powerUpEffect.Play();
+            Debug.Log("Power-up collected! Boost mode activated for 8 seconds.");
+            TriggerBoostMode(8f); // 8 second boost duration
 
-        //     // Destroy or disable the power-up after collection with null check
-        //     if (other != null && other.gameObject != null)
-        //     {
-        //         Destroy(other.gameObject);
-        //     }
-        // }
-        // else if (other.CompareTag("Magnetic"))
-        // {
-        //     Debug.Log("Magnetic power-up collected! Magnetic mode activated for 8 seconds.");
-        //     TriggerMagneticMode(8f); // 8 second magnetic mode duration
+            // Destroy or disable the power-up after collection with null check
+            if (other != null && other.gameObject != null)
+            {
+                Destroy(other.gameObject);
+            }
+        }
+        else if (other.CompareTag("Magnet"))
+        {
+            powerUpEffect.Play();
+            Debug.Log("Magnetic power-up collected! Magnetic mode activated for 8 seconds.");
+            TriggerMagneticMode(8f); // 8 second magnetic mode duration
 
-        //     // Destroy or disable the power-up after collection with null check
-        //     if (other != null && other.gameObject != null)
-        //     {
-        //         Destroy(other.gameObject);
-        //     }
-        // }
+            // Destroy or disable the power-up after collection with null check
+            if (other != null && other.gameObject != null)
+            {
+                Destroy(other.gameObject);
+            }
+        }
     }
 
     public void PlayerGameOver()

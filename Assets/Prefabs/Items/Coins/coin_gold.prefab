@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 9, y: 9, z: 9}
+  m_LocalScale: {x: 12, y: 12, z: 12}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinValue: 1
-  collectSound: {fileID: 8300000, guid: 3a1d68e14d89f6742b65f331e774fe96, type: 3}
+  collectSound: {fileID: 8300000, guid: 259ca9d06bf34c74cbd5744e43838908, type: 3}
   CoinPickupVFX: {fileID: 3331080691924193343, guid: 0ee4e45ca13cbac4890e5289a18d470c, type: 3}
   audioSource: {fileID: 6137379666487255544}
 --- !u!61 &-7966013887043725850
@@ -188,7 +188,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.506
   m_Pitch: 1
   Loop: 0
   Mute: 0
