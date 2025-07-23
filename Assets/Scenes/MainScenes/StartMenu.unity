@@ -133,19 +133,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1017777425645801019, guid: 67be07bbc7563d047a43dd809fea2a3f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 933.6844
+      value: 706.7206
       objectReference: {fileID: 0}
     - target: {fileID: 1017777425645801019, guid: 67be07bbc7563d047a43dd809fea2a3f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 130.9284
+      value: 127.4367
       objectReference: {fileID: 0}
     - target: {fileID: 1017777425645801019, guid: 67be07bbc7563d047a43dd809fea2a3f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 87.05957
+      value: 61
       objectReference: {fileID: 0}
     - target: {fileID: 1017777425645801019, guid: 67be07bbc7563d047a43dd809fea2a3f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 345
+      value: 378
       objectReference: {fileID: 0}
     - target: {fileID: 1328847925352995428, guid: 67be07bbc7563d047a43dd809fea2a3f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -337,7 +337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5375944925344695381, guid: 67be07bbc7563d047a43dd809fea2a3f, type: 3}
       propertyPath: m_text
-      value: Barry Adventure
+      value: Pengu dash
       objectReference: {fileID: 0}
     - target: {fileID: 5375944925344695381, guid: 67be07bbc7563d047a43dd809fea2a3f, type: 3}
       propertyPath: m_fontSize

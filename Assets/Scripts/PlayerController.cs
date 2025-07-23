@@ -324,6 +324,7 @@ public class PlayerController : MonoBehaviour
             {
                 isMagneticMode = false;
                 Debug.Log("Magnetic mode ended");
+                powerUpEffect.Stop();
                 return;
             }
 
@@ -566,7 +567,6 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.CompareTag("Shield"))
         {
-            powerUpEffect.Play();
             Debug.Log("Power-up collected! Boost mode activated for 8 seconds.");
             TriggerBoostMode(8f); // 8 second boost duration
 

@@ -66,7 +66,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0026752353, y: 0.10508251}
+  m_Offset: {x: -0.003173858, y: 0.19175574}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -76,7 +76,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.35258758, y: 0.20571381}
+  m_Size: {x: 0.50891834, y: 0.37906027}
   m_EdgeRadius: 0
 --- !u!1 &5205051703530151526
 GameObject:
@@ -156,9 +156,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -189837769
+  m_SortingLayer: 2
+  m_SortingOrder: 100
   m_Sprite: {fileID: -5514159762824491640, guid: cd7e198b85f179b45bec1945c67d8e40, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -182,7 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc4391a13ba03184c8d370a7b75720a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceCollider: {fileID: 0}
   destroyCollider: {fileID: 968553000415211577}
   rockDestroyedVFX: {fileID: 6446423183356420368, guid: 7816a0dfe3941b347a3317a3e2961455, type: 3}
   breakRockAudioSource: {fileID: 423891569102452234}
@@ -279,7 +278,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 67ac3cdc0b0dc9c41bdf60b3920f0c70, type: 3}
   m_Resource: {fileID: 8300000, guid: 67ac3cdc0b0dc9c41bdf60b3920f0c70, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

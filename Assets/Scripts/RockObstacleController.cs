@@ -5,7 +5,6 @@ using UnityEngine;
 public class RockObstacleController : MonoBehaviour
 {
     // Ref to the child colliders
-    [SerializeField] private Collider2D bounceCollider;
     [SerializeField] private Collider2D destroyCollider;
 	[SerializeField] private GameObject rockDestroyedVFX;
     [SerializeField] private AudioSource breakRockAudioSource;
@@ -31,11 +30,8 @@ public class RockObstacleController : MonoBehaviour
             
             // Debug information
             bool touchingDestroy = other.IsTouching(destroyCollider);
-            bool touchingBounce = other.IsTouching(bounceCollider);
             bool isBoosting = playerController.isBoosting;
             bool isBoxCollider = other is BoxCollider2D;
-            
-            Debug.Log($"Rock collision debug - Boosting: {isBoosting}, TouchingDestroy: {touchingDestroy}, TouchingBounce: {touchingBounce}, IsBoxCollider: {isBoxCollider}");
             
             // PRIORITY 1: If player is boosting, check for destruction first (regardless of collider type)
             if (isBoosting && touchingDestroy)
@@ -87,7 +83,7 @@ public class RockObstacleController : MonoBehaviour
             }
             
             // PRIORITY 2: If not boosting and hitting destroy area, game over
-            if (touchingDestroy)
+            if (touchingDestroy && !isBoosting)
             {
                 isDestroyed = true; // Mark as destroyed for this path
                 Debug.Log("Player is touching the destroy collider without boost, triggering game over.");
@@ -95,13 +91,6 @@ public class RockObstacleController : MonoBehaviour
                 return; // Exit early after game over
             }
             
-            // PRIORITY 3: If hitting bounce area (and not destroy area), bounce
-            if (isBoxCollider && touchingBounce && !touchingDestroy)
-            {
-                Debug.Log("Player's body hit the rock bounce collider - bouncing!");
-                playerController.BounceOffRock(transform.position);
-                return; // Don't destroy or game over, just bounce
-            }
         }
     }
 

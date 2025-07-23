@@ -24,7 +24,8 @@ public class CoinManager : MonoBehaviour
     void Start()
     {
         // Load từ SaveManager thay vì PlayerPrefs trực tiếp
-        totalCoins = SaveManager.Instance.LoadTotalCoins();
+        //totalCoins = SaveManager.Instance.LoadTotalCoins();
+        totalCoins = 0;
         UpdateUI();
     }
 
