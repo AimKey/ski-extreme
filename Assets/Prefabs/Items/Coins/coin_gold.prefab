@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -7966013887043725850}
   m_Layer: 0
   m_Name: coin_gold
-  m_TagString: Item
+  m_TagString: Coin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2dd5514232b480459853426bd3c836f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreValue: 50
+  coinValue: 1
   collectSound: {fileID: 8300000, guid: 95770c7e73a4bdf499e1aa5da3a5a8b0, type: 3}
 --- !u!61 &-7966013887043725850
 BoxCollider2D:

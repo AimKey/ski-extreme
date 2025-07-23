@@ -45,6 +45,13 @@ public class PlayerController : MonoBehaviour
     private float boostTimer;
     private TerrainManager terrainManager;
 
+    // Magnetic mode variables
+    [Header("Magnetic Mode Settings")]
+    [SerializeField] private float magneticRange = 30f; // Range to attract coins
+    [SerializeField] private float magneticForce = 4000f; // Force to pull coins
+    public bool isMagneticMode = false;
+    private float magneticTimer;
+
     // Child collider references
     [SerializeField] private Collider2D GameOverCollider;
 
@@ -108,6 +115,7 @@ public class PlayerController : MonoBehaviour
     {
         HandlePlayerRotation();
         HandleBoostPlayer();
+        HandleMagneticMode();
         ApplyConstantForce();
     }
 
@@ -131,6 +139,11 @@ public class PlayerController : MonoBehaviour
         {
             rotationAmount = -rotationSpeed * Time.deltaTime; // Negative for counter-clockwise
         }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            TriggerPermanentMagneticMode(); // Press M for permanent magnetic mode
+        }
+
         // else
         // {
         //     // Apply rotation based on left/right input when not holding space
@@ -195,6 +208,72 @@ public class PlayerController : MonoBehaviour
         boostTimer = duration;
         speedBoostParticlePrefab.Play();
         Debug.Log($"Boost mode activated for {duration} seconds!");
+    }
+
+    // Method to trigger magnetic mode with custom duration
+    public void TriggerMagneticMode(float duration)
+    {
+        isMagneticMode = true;
+        magneticTimer = duration;
+        Debug.Log($"Magnetic mode activated for {duration} seconds!");
+    }
+
+    // Method to trigger permanent magnetic mode for debugging
+    public void TriggerPermanentMagneticMode()
+    {
+        isMagneticMode = true;
+        magneticTimer = float.MaxValue; // Set to maximum value for "permanent"
+        Debug.Log("Permanent magnetic mode activated for debugging!");
+    }
+
+    private void HandleMagneticMode()
+    {
+        if (isMagneticMode)
+        {
+            magneticTimer -= Time.fixedDeltaTime;
+            if (magneticTimer <= 0)
+            {
+                isMagneticMode = false;
+                Debug.Log("Magnetic mode ended");
+                return;
+            }
+
+            // Find all nearby coins and attract them
+            AttractNearbyCoins();
+        }
+    }
+
+    private void AttractNearbyCoins()
+    {
+        // Find all GameObjects with "Coin" tag within magnetic range
+        GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
+        
+        foreach (GameObject coin in coins)
+        {
+            float distance = Vector2.Distance(transform.position, coin.transform.position);
+            
+            // Only attract coins within range
+            if (distance <= magneticRange)
+            {
+                // Calculate direction from coin to player
+                Vector2 direction = (transform.position - coin.transform.position).normalized;
+                
+                // Get or add Rigidbody2D to the coin for physics-based attraction
+                Rigidbody2D coinRb = coin.GetComponent<Rigidbody2D>();
+                if (coinRb != null)
+                {
+                    // Apply force towards player, stronger when closer
+                    float forceMultiplier = (magneticRange - distance) / magneticRange; // Stronger when closer
+                    coinRb.AddForce(direction * magneticForce * forceMultiplier * Time.fixedDeltaTime);
+                }
+                else
+                {
+                    // If no Rigidbody2D, move directly (simpler approach)
+                    float moveSpeed = magneticForce * Time.fixedDeltaTime * 0.01f;
+                    coin.transform.position = Vector2.MoveTowards(coin.transform.position, transform.position, moveSpeed);
+                }
+            }
+        }
     }
 
     // Used by rock controller
@@ -296,14 +375,28 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Ouch, my head");
             PlayerGameOver();
         }
-        else if (other.CompareTag("PowerUp"))
-        {
-            Debug.Log("Power-up collected! Boost mode activated for 8 seconds.");
-            TriggerBoostMode(8f); // 8 second boost duration
-            
-            // Destroy or disable the power-up after collection
-            Destroy(other.gameObject);
-        }
+        // else if (other.CompareTag("PowerUp"))
+        // {
+        //     Debug.Log("Power-up collected! Boost mode activated for 8 seconds.");
+        //     TriggerBoostMode(8f); // 8 second boost duration
+
+        //     // Destroy or disable the power-up after collection with null check
+        //     if (other != null && other.gameObject != null)
+        //     {
+        //         Destroy(other.gameObject);
+        //     }
+        // }
+        // else if (other.CompareTag("Magnetic"))
+        // {
+        //     Debug.Log("Magnetic power-up collected! Magnetic mode activated for 8 seconds.");
+        //     TriggerMagneticMode(8f); // 8 second magnetic mode duration
+
+        //     // Destroy or disable the power-up after collection with null check
+        //     if (other != null && other.gameObject != null)
+        //     {
+        //         Destroy(other.gameObject);
+        //     }
+        // }
     }
 
     public void PlayerGameOver()

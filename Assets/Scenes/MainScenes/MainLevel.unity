@@ -401,6 +401,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -7.928
       objectReference: {fileID: 0}
+    - target: {fileID: 7282630086687991691, guid: 0bd5a4a7cbc07d441add4fe03286b2bc, type: 3}
+      propertyPath: magneticForce
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282630086687991691, guid: 0bd5a4a7cbc07d441add4fe03286b2bc, type: 3}
+      propertyPath: magneticRange
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

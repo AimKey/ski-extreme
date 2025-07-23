@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - DecorMarker
   - Rock
+  - Coin
   layers:
   - Default
   - TransparentFX
