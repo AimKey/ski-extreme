@@ -22,6 +22,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float bufferTime = 0.2f; // Time in seconds to buffer the jump
     private float bufferRemainingTime;
 
+    // Space key timing variables
+    [Header("Space Key Control")]
+    [SerializeField] private float rotationDelayAfterJump = 0.3f; // Delay before rotation starts after jump
+    private float spaceHoldTime = 0f; // How long space has been held
+    private bool hasJumpedThisPress = false; // Track if we've already jumped this space press
+
 
     // Particle prefabs
     [SerializeField] private ParticleSystem driftingParticlePrefab;
@@ -140,16 +146,46 @@ public class PlayerController : MonoBehaviour
         // If on the ground don't allow rotation, or if player is dead
         if (isGrounded || IsPlayerLost)
         {
+            // Reset space key tracking when on ground
+            spaceHoldTime = 0f;
+            hasJumpedThisPress = false;
             return;
         }
 
         float rotationAmount = 0f;
 
-        // Check for space key input (counter-clockwise rotation)
+        // Handle space key for jump-then-rotate behavior
         if (Input.GetKey(KeyCode.Space))
         {
-            rotationAmount = -rotationSpeed * Time.deltaTime; // Negative for counter-clockwise
+            spaceHoldTime += Time.deltaTime;
+            
+            // Only allow rotation if we've been holding space long enough AND we're airborne
+            if (spaceHoldTime > rotationDelayAfterJump && !isGrounded)
+            {
+                rotationAmount = -rotationSpeed * Time.deltaTime; // Negative for counter-clockwise
+                
+                // Debug feedback for when rotation starts
+                if (spaceHoldTime > rotationDelayAfterJump && spaceHoldTime - Time.deltaTime <= rotationDelayAfterJump)
+                {
+                    Debug.Log("Rotation mode activated! Keep holding space to spin.");
+                }
+            }
         }
+        else
+        {
+            // Reset when space is released
+            spaceHoldTime = 0f;
+            hasJumpedThisPress = false;
+        }
+        
+        // Handle space key press for jumping
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            spaceHoldTime = 0f; // Reset timer on new press
+            hasJumpedThisPress = false;
+            Jump(); // Attempt to jump
+        }
+        
         if (Input.GetKeyDown(KeyCode.M))
         {
             Debug.Log($"Triggering magnetic");
@@ -335,6 +371,34 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.IncreaseScoreFromPlayerTrick(GameConstants.RockSmash);
     }
 
+    // Method to handle bouncing off rocks when hit by body collider
+    public void BounceOffRock(Vector2 rockPosition)
+    {
+        // Calculate bounce direction (away from rock)
+        Vector2 playerPosition = transform.position;
+        Vector2 bounceDirection = (playerPosition - rockPosition).normalized;
+        
+        // Add some upward force to make the bounce more dramatic
+        bounceDirection.y = Mathf.Max(bounceDirection.y, 0.3f) * 1.2f; // Rock bounce upward multiplier
+        bounceDirection = bounceDirection.normalized;
+        
+        // Apply bounce force
+        Vector2 bounceForce = bounceDirection * 800f; // Rock bounce force
+        rb.AddForce(bounceForce, ForceMode2D.Impulse);
+        
+        // Add some rotation for visual effect
+        float rotationForce = UnityEngine.Random.Range(-200f, 200f);
+        rb.AddTorque(rotationForce);
+        
+        Debug.Log($"Player bounced off rock! Force: {bounceForce}, Direction: {bounceDirection}");
+        
+        // Optional: Play bounce sound or particle effect here
+        if (audioSource != null && trickPerformedSound != null)
+        {
+            audioSource.PlayOneShot(trickPerformedSound);
+        }
+    }
+
     private void DampLandingVelocity()
     {
         // Get current velocity
@@ -430,6 +494,10 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = true;
             
+            // Reset space key tracking when landing
+            spaceHoldTime = 0f;
+            hasJumpedThisPress = false;
+            
             // Apply landing velocity damping to reduce bounce
             DampLandingVelocity();
             
@@ -439,6 +507,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Buffered jump executed");
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 bufferJump = false; // Reset the buffer after executing the jump
+                hasJumpedThisPress = true; // Mark that we've jumped
             }
 
             // Play the drifting particle effect that follow this player
@@ -569,16 +638,21 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        if ((isGrounded))
+        // Only jump if we haven't already jumped with this space press
+        if (isGrounded && !hasJumpedThisPress)
         {
             Vector2 jumpVector = Vector2.up + Vector2.right * 0.5f; // Small forward push
             rb.AddForce(jumpVector * jumpForce, ForceMode2D.Impulse);
             cameraZoomEffect?.ZoomOut();
             ToggleSurfingAudio(false);
+            hasJumpedThisPress = true; // Mark that we've jumped
+            Debug.Log("Player jumped!");
         }
-        else
+        else if (!isGrounded && !hasJumpedThisPress)
         {
+            // If airborne and haven't jumped yet, buffer the jump
             bufferJump = true;
+            hasJumpedThisPress = true; // Prevent multiple buffer attempts
         }
     }
 
