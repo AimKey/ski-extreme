@@ -10,6 +10,7 @@ TagManager:
   - Rock
   - Magnet
   - Shield
+  - Coin
   layers:
   - Default
   - TransparentFX

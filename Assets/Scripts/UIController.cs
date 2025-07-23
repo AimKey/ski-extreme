@@ -42,11 +42,21 @@ public class UIController : MonoBehaviour
         scoreText.text = $"{trick.TrickName} +{trick.TrickScore}";
         
         textPopupInstance.SetActive(true);
-        Destroy(textPopupInstance, TextPopupAnimation.length);
+        
+        // Use animation length if available, otherwise use default duration
+        float destroyDelay = TextPopupAnimation != null ? TextPopupAnimation.length : 2f;
+        Destroy(textPopupInstance, destroyDelay);
     }
 
     public void UpdatePlayerScore(int scoreToUpdate)
     {
-        TextScoreText.text = $"Score: {scoreToUpdate:00000000}";
+        if (TextScoreText != null)
+        {
+            TextScoreText.text = $"Score: {scoreToUpdate:00000000}";
+        }
+        else
+        {
+            Debug.LogWarning("TextScoreText is not assigned in UIController inspector!");
+        }
     }
 }
